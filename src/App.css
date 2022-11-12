@@ -1,1 +1,10 @@
-
+.hero--section {
+  aspect-ratio: 16/9;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url("./assets/hero_background.svg");
+  max-height: 960px;
+  padding-top: 56px;
+}
