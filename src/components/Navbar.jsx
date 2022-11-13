@@ -11,7 +11,7 @@ export default function NavBar() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="#home">Coding in Clothing</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
