@@ -5,7 +5,7 @@ export default function ProductSection() {
   return (
     <div className="product--section">
       <Container>
-        <Row className="row-cols-2 row-cols-xl-4 gy-2 gx-4 px-0 px-md-5">
+        <Row className="row-cols-2 row-cols-xl-4 gy-2 gx-2 gx-md-4 px-0 px-md-5">
           <Col>
             <Card style={{ width: "100%" }} className="shadow grow">
               <Card.Img variant="top" src={tShirtImage} />

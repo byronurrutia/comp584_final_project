@@ -6,7 +6,7 @@
   background-size: cover;
   background-image: url("./assets/hero_background.svg");
   max-height: 960px;
-  min-height: 844px;
+  min-height: 600px;
   padding-top: 56px;
 }
 
