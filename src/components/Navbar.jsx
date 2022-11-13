@@ -6,6 +6,7 @@ import {
   Twitter,
   Youtube,
 } from "react-bootstrap-icons";
+import logo from "../assets/light_icon.png";
 
 export default function NavBar() {
   return (
@@ -18,7 +19,15 @@ export default function NavBar() {
       className="shadow"
     >
       <Container>
-        <Navbar.Brand href="#home">Coding in Clothing</Navbar.Brand>
+        <Navbar.Brand href="#home">
+          <img
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+            src={logo}
+            alt="logo"
+          />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
