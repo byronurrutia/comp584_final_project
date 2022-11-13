@@ -19,10 +19,16 @@ export default function NavBar() {
               title="Product Catagories"
               id="collasible-nav-dropdown"
             >
-              <NavDropdown.Item href="#">Outerwear</NavDropdown.Item>
-              <NavDropdown.Item href="#">Tops</NavDropdown.Item>
-              <NavDropdown.Item href="#">Bottoms</NavDropdown.Item>
-              <NavDropdown.Item href="#">Bottoms</NavDropdown.Item>
+              <NavDropdown.Item href="#outerwear--section">
+                Outerwear
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#tops--section">Tops</NavDropdown.Item>
+              <NavDropdown.Item href="#bottoms--section">
+                Bottoms
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#accessories--section">
+                Bottoms
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#">Sizing</NavDropdown.Item>
             </NavDropdown>
