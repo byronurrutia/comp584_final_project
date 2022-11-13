@@ -8,3 +8,11 @@
   max-height: 960px;
   padding-top: 56px;
 }
+
+.grow {
+  transition: all 0.2s ease-in-out;
+}
+
+.grow:hover {
+  transform: scale(1.1);
+}
