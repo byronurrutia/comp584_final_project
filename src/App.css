@@ -6,6 +6,7 @@
   background-size: cover;
   background-image: url("./assets/hero_background.svg");
   max-height: 960px;
+  min-height: 844px;
   padding-top: 56px;
 }
 
@@ -14,5 +15,5 @@
 }
 
 .grow:hover {
-  transform: scale(1.1);
+  transform: scale(1.03);
 }
