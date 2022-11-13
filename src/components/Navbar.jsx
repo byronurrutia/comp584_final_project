@@ -9,7 +9,14 @@ import {
 
 export default function NavBar() {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      bg="light"
+      variant="light"
+      fixed="top"
+      className="shadow"
+    >
       <Container>
         <Navbar.Brand href="#home">Coding in Clothing</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

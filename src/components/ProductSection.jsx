@@ -7,7 +7,7 @@ export default function ProductSection() {
       <Container className="px-5">
         <Row className="row-cols-2 row-cols-xl-4">
           <Col className="mb-4">
-            <Card style={{ width: "100%" }}>
+            <Card style={{ width: "100%" }} className="shadow">
               <Card.Img variant="top" src={tShirtImage} />
               <Card.Body>
                 <Card.Title>Sample Product</Card.Title>
@@ -16,7 +16,7 @@ export default function ProductSection() {
             </Card>
           </Col>
           <Col className="mb-4">
-            <Card style={{ width: "100%" }}>
+            <Card style={{ width: "100%" }} className="shadow">
               <Card.Img variant="top" src={tShirtImage} />
               <Card.Body>
                 <Card.Title>Sample Product</Card.Title>
@@ -25,7 +25,7 @@ export default function ProductSection() {
             </Card>
           </Col>
           <Col>
-            <Card style={{ width: "100%" }}>
+            <Card style={{ width: "100%" }} className="shadow">
               <Card.Img variant="top" src={tShirtImage} />
               <Card.Body>
                 <Card.Title>Sample Product</Card.Title>
@@ -34,7 +34,7 @@ export default function ProductSection() {
             </Card>
           </Col>
           <Col>
-            <Card style={{ width: "100%" }}>
+            <Card style={{ width: "100%" }} className="shadow">
               <Card.Img variant="top" src={tShirtImage} />
               <Card.Body>
                 <Card.Title>Sample Product</Card.Title>
