@@ -19,7 +19,7 @@ export default function HeroSection() {
             <a href="#accessories--section">Accessories</a>
           </Button>
           <Button variant="light" size="large" className="px-xl-4 shadow">
-            <a href="#">Sizing</a>
+            <a href="#Home">Sizing</a>
           </Button>
         </div>
       </div>
