@@ -10,7 +10,7 @@ import project.ecommerceapp.dto.ChargeRequest;
 import project.ecommerceapp.service.StripeService;
 
 @RestController
-@RequestMapping("/api/v1/stripe")
+@RequestMapping("584final/api/v1/stripe")
 public class APIController {
 
     @Value("${STRIPE_PUBLIC_KEY}")
@@ -33,20 +33,18 @@ public class APIController {
     }
 
     @PostMapping("/charge")
-    public String charge(ChargeRequest chargeRequest,Model model) throws StripeException{
-        chargeRequest.setDescription("customer charge");
+    public String charge(@RequestBody ChargeRequest chargeRequest)
+            throws StripeException {
         chargeRequest.setCurrency(ChargeRequest.Currency.USD);
         Charge charge = paymentsService.charge(chargeRequest);
-        model.addAttribute("id", charge.getId());
-        model.addAttribute("status", charge.getStatus());
-        model.addAttribute("chargeId", charge.getId());
-        model.addAttribute("balance_transaction", charge.getBalanceTransaction());
-        return "result";
+        StringBuilder response = new StringBuilder();
+        response.append(charge.toString());
+        return response.toString();
     }
 
     @ExceptionHandler(StripeException.class)
     public String handleError(Model model, StripeException ex) {
         model.addAttribute("error", ex.getMessage());
-        return "result";
+        return ex.toString();
     }
 }
