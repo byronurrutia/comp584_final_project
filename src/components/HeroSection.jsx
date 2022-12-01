@@ -1,51 +1,57 @@
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
-    <div className="hero--section text-center d-flex flex-column justify-content-center">
+    <div className="hero-section text-center d-flex flex-column justify-content-center">
       <h1 className="display-1 fw-bold pb-5 mt-5">Coding in Clothing</h1>
       <div className="col-7 mx-auto mb-5">
         <div className="gap-2 d-xl-flex d-grid justify-content-xl-center">
-          <Button
-            href="#outerwear--section"
-            variant="light"
-            size="large"
-            className="px-xl-4 shadow"
-          >
-            Outerwear
-          </Button>
-          <Button
-            href="#tops--section"
-            variant="light"
-            size="large"
-            className="px-xl-4 shadow"
-          >
-            Tops
-          </Button>
-          <Button
-            href="#bottoms--section"
-            variant="light"
-            size="large"
-            className="px-xl-4 shadow"
-          >
-            Bottoms
-          </Button>
-          <Button
-            href="#accessories--section"
-            variant="light"
-            size="large"
-            className="px-xl-4 shadow"
-          >
-            Accessories
-          </Button>
-          <Button
-            href="#Home"
-            variant="light"
-            size="large"
-            className="px-xl-4 shadow"
-          >
-            Sizing
-          </Button>
+          <Link to={"/comp584_final_project/outerwear"}>
+            <Button
+              variant="light"
+              size="large"
+              className="px-xl-4 shadow w-100"
+            >
+              Outerwear
+            </Button>
+          </Link>
+          <Link to={"/comp584_final_project/tops"}>
+            <Button
+              variant="light"
+              size="large"
+              className="px-xl-4 shadow w-100"
+            >
+              Tops
+            </Button>
+          </Link>
+          <Link to={"/comp584_final_project/bottoms"}>
+            <Button
+              variant="light"
+              size="large"
+              className="px-xl-4 shadow w-100"
+            >
+              Bottoms
+            </Button>
+          </Link>
+          <Link to={"/comp584_final_project/accessories"}>
+            <Button
+              variant="light"
+              size="large"
+              className="px-xl-4 shadow w-100"
+            >
+              Accessories
+            </Button>
+          </Link>
+          <Link to={"/comp584_final_project/all"}>
+            <Button
+              variant="light"
+              size="large"
+              className="px-xl-4 shadow w-100"
+            >
+              All Products
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

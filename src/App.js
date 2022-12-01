@@ -1,26 +1,39 @@
 import "./App.css";
-import NavBar from "./components/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
-import HeroSection from "./components/HeroSection";
-import ProductSection from "./components/ProductSection";
-import HeaderSection from "./components/HeaderSection";
-import FooterSection from "./components/FooterSection";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
+import Products from "./pages/Products";
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
-      <HeroSection />
-      <HeaderSection link="outerwear--section" text="Outerwear" />
-      <ProductSection />
-      <HeaderSection link="tops--section" text="Tops" />
-      <ProductSection />
-      <HeaderSection link="bottoms--section" text="Bottoms" />
-      <ProductSection />
-      <HeaderSection link="accessories--section" text="Accessories" />
-      <ProductSection />
-      <FooterSection />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="comp584_final_project" element={<Dashboard />}>
+          <Route index element={<Home />} />
+          <Route
+            path="/comp584_final_project/outerwear"
+            element={<Products text="Outerwear" />}
+          ></Route>
+          <Route
+            path="/comp584_final_project/tops"
+            element={<Products text="Tops" />}
+          ></Route>
+          <Route
+            path="/comp584_final_project/bottoms"
+            element={<Products text="Bottoms" />}
+          ></Route>
+          <Route
+            path="/comp584_final_project/accessories"
+            element={<Products text="Accesories" />}
+          ></Route>
+          <Route
+            path="/comp584_final_project/all"
+            element={<Products text="All Products" />}
+          ></Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
