@@ -5,10 +5,14 @@ export default function Products(props) {
     <div
       style={{
         backgroundColor: props.lightMode ? "white" : "#121212",
-        color: props.lightMode ? "black" : "white",
       }}
     >
-      <h1 className="display-5 fw-bold">{props.text}</h1>
+      <h1
+        className="display-5 fw-bold"
+        style={{ color: props.lightMode ? "black" : "white" }}
+      >
+        {props.text}
+      </h1>
       <ProductSection lightMode={props.lighMode} />
     </div>
   );

@@ -38,6 +38,7 @@ export default function NavbarSection(props) {
             <NavDropdown
               title="Product Catagories"
               id="collasible-nav-dropdown"
+              variant={props.lightMode ? "light" : "dark"}
             >
               <Link to={"/comp584_final_project/outerwear"}>
                 <NavDropdown.Item href="#outerwear-section">
@@ -65,7 +66,11 @@ export default function NavbarSection(props) {
                 </NavDropdown.Item>
               </Link>
             </NavDropdown>
-            <NavDropdown title="Cart (0)" id="collasible-nav-dropdown">
+            <NavDropdown
+              title="Cart (0)"
+              id="collasible-nav-dropdown"
+              variant={props.lightMode ? "light" : "dark"}
+            >
               <div className="w-100 d-flex justify-">
                 <Button
                   href="#Home"
@@ -78,8 +83,12 @@ export default function NavbarSection(props) {
               </div>
             </NavDropdown>
             <button
-              className="toogle-theme d-flex align-items-center px-lg-3"
-              style={{ background: "none", border: "none" }}
+              className="toogle-theme d-flex align-items-center px-lg-3 p-0"
+              style={{
+                background: "none",
+                border: "none",
+                textDecoration: "none",
+              }}
               onClick={props.toggleMode}
             >
               {props.lightMode ? <Sun /> : <Moon fill="white" />}
