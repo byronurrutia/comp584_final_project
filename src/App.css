@@ -7,7 +7,3 @@
   background-image: url("./assets/hero_background.svg");
   height: 100vh;
 }
-
-.toggle-them:hover {
-  cursor: pointer;
-}

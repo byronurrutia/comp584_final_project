@@ -77,12 +77,13 @@ export default function NavbarSection(props) {
                 </Button>
               </div>
             </NavDropdown>
-            <div
+            <button
               className="toogle-theme d-flex align-items-center px-lg-3"
+              style={{ background: "none", border: "none" }}
               onClick={props.toggleMode}
             >
               {props.lightMode ? <Sun /> : <Moon fill="white" />}
-            </div>
+            </button>
           </Nav>
         </Navbar.Collapse>
       </Container>
