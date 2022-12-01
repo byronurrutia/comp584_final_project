@@ -1,7 +1,7 @@
 import { Card, Col, Container, Row } from "react-bootstrap";
 import tShirtImage from "../assets/tshirt.jpg";
 
-export default function ProductSection() {
+export default function ProductSection(props) {
   return (
     <div className="product-section">
       <Container fluid>

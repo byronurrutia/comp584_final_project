@@ -1,9 +1,13 @@
 import { Container } from "react-bootstrap";
 import { Facebook, Instagram, Twitter, Youtube } from "react-bootstrap-icons";
 
-export default function FooterSection() {
+export default function FooterSection(props) {
   return (
-    <Container fluid className="d-flex flex-row justify-content-center py-5">
+    <Container
+      fluid
+      className="d-flex flex-row justify-content-center py-5"
+      style={{ backgroundColor: props.lightMode ? "white" : "#121212" }}
+    >
       <a href="#Home" className="me-3">
         <Twitter color="grey" />
       </a>

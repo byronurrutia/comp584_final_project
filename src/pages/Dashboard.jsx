@@ -2,12 +2,16 @@ import { Outlet } from "react-router-dom";
 import NavbarSection from "../components/NavbarSection";
 import FooterSection from "../components/FooterSection";
 
-export default function Dashboard() {
+export default function Dashboard(props) {
+  console.log(props);
   return (
     <>
-      <NavbarSection />
+      <NavbarSection
+        lightMode={props.lightMode}
+        toggleMode={props.toggleMode}
+      />
       <Outlet />
-      <FooterSection />
+      <FooterSection lightMode={props.lightMode} />
     </>
   );
 }
