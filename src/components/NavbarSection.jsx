@@ -3,7 +3,6 @@ import { Moon, Sun } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
 export default function NavbarSection(props) {
-  console.log(props);
   return (
     <Navbar
       collapseOnSelect
@@ -31,7 +30,9 @@ export default function NavbarSection(props) {
             </svg>
           </Navbar.Brand>
         </Link>
+
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link>Account</Nav.Link>
@@ -40,46 +41,87 @@ export default function NavbarSection(props) {
               id="collasible-nav-dropdown"
               variant={props.lightMode ? "light" : "dark"}
             >
-              <Link to={"/comp584_final_project/outerwear"}>
-                <NavDropdown.Item href="#outerwear-section">
+              <Link
+                to={"/comp584_final_project/outerwear"}
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
+                <NavDropdown.Item href="/comp584_final_project/outerwear">
                   Outerwear
                 </NavDropdown.Item>
               </Link>
-              <Link to={"/comp584_final_project/tops"}>
-                <NavDropdown.Item href="#outerwear-section">
+              <Link
+                to={"/comp584_final_project/tops"}
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
+                <NavDropdown.Item href="/comp584_final_project/tops">
                   Tops
                 </NavDropdown.Item>
               </Link>
-              <Link to={"/comp584_final_project/bottoms"}>
-                <NavDropdown.Item href="#outerwear-section">
+              <Link
+                to={"/comp584_final_project/bottoms"}
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
+                <NavDropdown.Item href="/comp584_final_project/bottoms">
                   Bottoms
                 </NavDropdown.Item>
               </Link>
-              <Link to={"/comp584_final_project/accessories"}>
-                <NavDropdown.Item href="#outerwear-section">
-                  Accesories
+              <Link
+                to={"/comp584_final_project/accessories"}
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
+                <NavDropdown.Item href="/comp584_final_project/accessories">
+                  Accessories
                 </NavDropdown.Item>
               </Link>
-              <Link to={"/comp584_final_project/all"}>
-                <NavDropdown.Item href="#outerwear-section">
+              <Link
+                to={"/comp584_final_project/all"}
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
+                <NavDropdown.Item href="/comp584_final_project/all">
                   All Products
                 </NavDropdown.Item>
               </Link>
             </NavDropdown>
             <NavDropdown
-              title="Cart (0)"
+              title={"Cart " + "(" + props.cartItems.length + ")"}
               id="collasible-nav-dropdown"
               variant={props.lightMode ? "light" : "dark"}
             >
-              <div className="w-100 d-flex justify-">
-                <Button
-                  href="#Home"
-                  variant="danger"
-                  size="large"
-                  className="w-75 mx-auto"
+              <NavDropdown.Divider />
+              <div className="w-100 d-flex">
+                <Link
+                  to={"/comp584_final_project/checkout"}
+                  className="w-100 d-flex justify-content-center"
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                  }}
                 >
-                  Checkout
-                </Button>
+                  <Button
+                    href="/comp584_final_project/checkout"
+                    variant="dark"
+                    size="large"
+                    className="w-75 mx-auto"
+                    onClick={props.checkout}
+                  >
+                    Checkout
+                  </Button>
+                </Link>
               </div>
             </NavDropdown>
             <button
@@ -91,7 +133,7 @@ export default function NavbarSection(props) {
               }}
               onClick={props.toggleMode}
             >
-              {props.lightMode ? <Sun /> : <Moon fill="white" />}
+              {props.lightMode ? <Sun fill="black" /> : <Moon fill="white" />}
             </button>
           </Nav>
         </Navbar.Collapse>

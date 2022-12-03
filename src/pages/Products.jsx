@@ -8,12 +8,12 @@ export default function Products(props) {
       }}
     >
       <h1
-        className="display-5 fw-bold"
+        className="display-5 fw-bold p-3"
         style={{ color: props.lightMode ? "black" : "white" }}
       >
         {props.text}
       </h1>
-      <ProductSection lightMode={props.lighMode} />
+      <ProductSection lightMode={props.lighMode} products={props.products} />
     </div>
   );
 }
