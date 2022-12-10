@@ -101,7 +101,7 @@ export default function NavbarSection(props) {
               </Link>
             </NavDropdown>
             <NavDropdown
-              title={"Cart " + "(" + props.cartItems.length + ")"}
+              title={`Cart (${props.cartItems.length})`}
               id="collasible-nav-dropdown"
               variant={props.lightMode ? "light" : "dark"}
             >
