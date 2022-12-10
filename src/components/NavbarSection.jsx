@@ -1,6 +1,7 @@
 import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { Moon, Sun } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
+import Account from "../auth/Account";
 
 export default function NavbarSection(props) {
   return (
@@ -35,7 +36,9 @@ export default function NavbarSection(props) {
 
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link>Account</Nav.Link>
+            <Nav.Link>
+              <Account />
+            </Nav.Link>
             <NavDropdown
               title="Product Catagories"
               id="collasible-nav-dropdown"

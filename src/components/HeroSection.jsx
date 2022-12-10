@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function HeroSection(props) {
   return (
-    <div
-      className="hero-section text-center d-flex flex-column justify-content-center"
-      style={{ backgroundColor: props.lightMode ? "white" : "#121212" }}
-    >
+    <div className="hero-section text-center d-flex flex-column justify-content-center">
       <h1
         className="display-1 fw-bold pb-5 mt-5"
         style={{ color: props.lightMode ? "black" : "white" }}

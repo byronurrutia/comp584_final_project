@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import { Facebook, Instagram, Twitter, Youtube } from "react-bootstrap-icons";
+import { Instagram, Twitter, Youtube } from "react-bootstrap-icons";
 
 export default function FooterSection(props) {
   return (

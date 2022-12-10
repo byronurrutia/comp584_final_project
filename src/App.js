@@ -1,20 +1,34 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import Checkout from "./pages/Checkout";
+import config from "../src/auth/config";
+import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
+import { LoginCallback, Security } from "@okta/okta-react";
+import Login from "../src/auth/Login";
+import axios from "axios";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
+const oktaAuth = new OktaAuth(config.oidc);
 
 function App() {
   const [isLightMode, setIsLightMode] = useState(true);
   const [allProducts, setAllProducts] = useState();
   const [cartItems, setCartItems] = useState([]);
   const [clientSecret, setClientSecret] = useState("");
+
+  const history = useNavigate();
+  const customAuthHandler = () => {
+    history.push("/login");
+  };
+  const restoreOriginalUri = async (_oktaAuth, originalUri) => {
+    history.replace(toRelativeUrl(originalUri || "", window.location.origin));
+  };
 
   const appearance = {
     theme: "stripe",
@@ -37,48 +51,51 @@ function App() {
   }
 
   function checkout() {
-    // var qs = require("qs");
-    // var data = qs.stringify({
-    //   amount: "10000",
-    //   currency: "USD",
-    // });
-    // var config = {
-    //   method: "post",
-    //   url: "https://api.stripe.com//v1/payment_intents",
-    //   headers: {
-    //     "Content-Type": "application/x-www-form-urlencoded",
-    //     Authorization:
-    //       "Bearer sk_test_51M9KQVDFKcUmHWCShtz71sK2YiKdZab0mTtFjHPDmVwTcOlhIN5u3wrYQ3UNjPj2kwWf9qduFDcaDtfA4wROMwAw00F5ryD30u",
-    //   },
-    //   data: data,
-    // };
-    // axios(config)
-    //   .then(function (response) {
-    //     // console.log(JSON.stringify(response.data));
-    //     // const processedData
-    //     console.log(response);
-    //     setClientSecret(response.data.client_secret);
-    //     // setClientSecret(processedData.clientSecret);
-    //     console.log(clientSecret);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    // Create PaymentIntent as soon as the page loads
+    fetch("/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+    })
+      .then((res) => res.json())
+      .then((data) => setClientSecret(data.clientSecret));
   }
 
+  // class Product {
+  //   constructor(productName, productDiscription, productImages, productId) {
+  //     (this.productName = productName),
+  //       (this.productDiscription = productDiscription),
+  //       (this.productImages = productImages),
+  //       (this.productId = productId);
+  //   }
+  // }
+
   useEffect(() => {
-    // fetch("https://themillenniumfalcon.junhechen.com/584final/api/v1/stripe/")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setAllProducts(data);
-    //   });
+    axios
+      .get(
+        "https://themillenniumfalcon.junhechen.com/584final/api/v1/stripe/getAllItem"
+      )
+      .then((res) => {
+        console.log(res);
+        const products = res.data;
+        console.log(products);
+        setAllProducts(products);
+        console.log(allProducts);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
-    <BrowserRouter>
+    <Security
+      oktaAuth={oktaAuth}
+      onAuthRequired={customAuthHandler}
+      restoreOriginalUri={restoreOriginalUri}
+    >
       <Routes>
         <Route
-          path="comp584_final_project"
+          path="/comp584_final_project"
           element={
             <Dashboard
               lightMode={isLightMode}
@@ -152,9 +169,14 @@ function App() {
               />
             }
           />
+          <Route path="/comp584_final_project/login" element={<Login />} />
+          <Route
+            path="/comp584_final_project/login/callback"
+            element={LoginCallback}
+          />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Security>
   );
 }
 
