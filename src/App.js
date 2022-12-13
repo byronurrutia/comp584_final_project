@@ -18,7 +18,7 @@ const oktaAuth = new OktaAuth(config.oidc);
 
 function App() {
   const [isLightMode, setIsLightMode] = useState(true);
-  const [allProducts, setAllProducts] = useState();
+  const [allProducts, setAllProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [clientSecret, setClientSecret] = useState("");
 
@@ -50,15 +50,17 @@ function App() {
     setCartItems();
   }
 
+
   function checkout() {
     // Create PaymentIntent as soon as the page loads
-    fetch("/create-payment-intent", {
+    fetch("https://themillenniumfalcon.junhechen.com//584final/api/v1/stripe/paymentIntend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+      body: JSON.stringify({ amount: 20000, currency:"USD",method:"card" }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
+      console.log("clientsecret: " + clientSecret);
   }
 
   // class Product {
@@ -69,6 +71,15 @@ function App() {
   //       (this.productId = productId);
   //   }
   // }
+  function filter(category, products){
+    let outputArr = []
+    products.forEach(element => {
+      if(element.category === category){
+        outputArr.push(element);
+      }
+    });
+    return outputArr;
+  }
 
   useEffect(() => {
     axios
@@ -76,11 +87,16 @@ function App() {
         "https://themillenniumfalcon.junhechen.com/584final/api/v1/stripe/getAllItem"
       )
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         const products = res.data;
-        console.log(products);
-        setAllProducts(products);
-        console.log(allProducts);
+        let resArr = [];
+        products.forEach(element => {
+          resArr.push(element)
+        });
+        //console.log(products);
+        setAllProducts(resArr);
+        //console.log(typeof(allProducts))
+        //console.log(allProducts);
       })
       .catch((err) => {
         console.log(err);
@@ -113,7 +129,7 @@ function App() {
               <Products
                 text="Outerwear"
                 lightMode={isLightMode}
-                products={allProducts}
+                products={filter("outerwear",allProducts)}
               />
             }
           />
@@ -123,7 +139,7 @@ function App() {
               <Products
                 text="Tops"
                 lightMode={isLightMode}
-                products={allProducts}
+                products={filter("tops",allProducts)}
               />
             }
           />
@@ -133,7 +149,7 @@ function App() {
               <Products
                 text="Bottoms"
                 lightMode={isLightMode}
-                products={allProducts}
+                products={filter("bottoms",allProducts)}
               />
             }
           />
@@ -143,7 +159,7 @@ function App() {
               <Products
                 text="Accesories"
                 lightMode={isLightMode}
-                products={allProducts}
+                products={filter("accessories",allProducts)}
               />
             }
           />
@@ -164,7 +180,7 @@ function App() {
                 lightMode={isLightMode}
                 appearance={appearance}
                 options={options}
-                // clientSecret={clientSecret}
+                clientSecret={clientSecret}
                 stripePromise={stripePromise}
               />
             }
@@ -173,6 +189,18 @@ function App() {
           <Route
             path="/comp584_final_project/login/callback"
             element={LoginCallback}
+          />
+          <Route
+            path="*"
+            element={
+              <Dashboard
+                lightMode={isLightMode}
+                toggleMode={toggleMode}
+                cartItems={cartItems}
+                removeItem={removeItem}
+                checkout={checkout}
+              />
+            }
           />
         </Route>
       </Routes>
