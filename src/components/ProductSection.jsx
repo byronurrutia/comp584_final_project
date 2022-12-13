@@ -1,4 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { PlusSquare } from "react-bootstrap-icons" 
 
 export default function ProductSection(props) {
   return (
@@ -32,6 +34,8 @@ export default function ProductSection(props) {
                   minimumFractionDigits: 2,
                 })}
               </p>
+              <Link to={"#"}>showDetail</Link>
+              <PlusSquare onClick={props.addItem()}/>
             </Col>
           ))}
         </Row>
