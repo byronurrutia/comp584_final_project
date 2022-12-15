@@ -1,5 +1,5 @@
 import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
-import { Moon, Sun } from "react-bootstrap-icons";
+import { DashSquare, Moon, Sun } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import Account from "../auth/Account";
 
@@ -105,6 +105,45 @@ export default function NavbarSection(props) {
               id="collasible-nav-dropdown"
               variant={props.lightMode ? "light" : "dark"}
             >
+              {props.cartItems.length === 0 ? (
+                <div className="d-flex justify-content-center">
+                  <p>Your Cart is Empty</p>
+                </div>
+              ) : (
+                props.cartItems.map((item) => {
+                  return (
+                    <div className="d-flex justify-content-between">
+                      <div className="d-flex">
+                        {item.image_url.length !== 0 ? (
+                          <img
+                            src={item.image_url[0]}
+                            alt="product"
+                            style={{ width: 30 }}
+                          />
+                        ) : (
+                          <img
+                            src="https://www.nicepng.com/png/detail/207-2070432_white-background-url.png"
+                            alt="product"
+                            style={{ width: 30 }}
+                          />
+                        )}
+                        <p>
+                          {item.productName} <br />${" "}
+                          {(item.price / Math.pow(10, 2)).toLocaleString(
+                            "en-us",
+                            {
+                              minimumFractionDigits: 2,
+                            }
+                          )}
+                        </p>
+                      </div>
+                      <Button variant="danger" onClick={props.removeItem}>
+                        <DashSquare />
+                      </Button>
+                    </div>
+                  );
+                })
+              )}
               <NavDropdown.Divider />
               <div className="w-100 d-flex">
                 <Link
@@ -121,6 +160,7 @@ export default function NavbarSection(props) {
                     size="large"
                     className="w-75 mx-auto"
                     onClick={props.checkout}
+                    // disabled={!props.cartItems.length === 0}
                   >
                     Checkout
                   </Button>

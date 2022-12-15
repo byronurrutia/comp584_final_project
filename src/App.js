@@ -42,39 +42,37 @@ function App() {
     setIsLightMode((prev) => !prev);
   }
 
-  function addItem() {
-    setCartItems();
-  }
+  // function addItem() {
+  //   setCartItems();
+  // }
 
   function removeItem() {
     setCartItems();
   }
 
-
   function checkout() {
     // Create PaymentIntent as soon as the page loads
-    fetch("https://themillenniumfalcon.junhechen.com//584final/api/v1/stripe/paymentIntend", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: 20000, currency:"USD",method:"card" }),
-    })
+    fetch(
+      "https://themillenniumfalcon.junhechen.com//584final/api/v1/stripe/paymentIntend",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: 20000,
+          currency: "USD",
+          method: "card",
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-      console.log("clientsecret: " + clientSecret);
+    console.log("clientsecret: " + clientSecret);
   }
 
-  // class Product {
-  //   constructor(productName, productDiscription, productImages, productId) {
-  //     (this.productName = productName),
-  //       (this.productDiscription = productDiscription),
-  //       (this.productImages = productImages),
-  //       (this.productId = productId);
-  //   }
-  // }
-  function filter(category, products){
-    let outputArr = []
-    products.forEach(element => {
-      if(element.category === category){
+  function filter(category, products) {
+    let outputArr = [];
+    products.forEach((element) => {
+      if (element.category === category) {
         outputArr.push(element);
       }
     });
@@ -90,13 +88,11 @@ function App() {
         //console.log(res);
         const products = res.data;
         let resArr = [];
-        products.forEach(element => {
-          resArr.push(element)
+        products.forEach((element) => {
+          resArr.push(element);
         });
         //console.log(products);
         setAllProducts(resArr);
-        //console.log(typeof(allProducts))
-        //console.log(allProducts);
       })
       .catch((err) => {
         console.log(err);
@@ -129,7 +125,7 @@ function App() {
               <Products
                 text="Outerwear"
                 lightMode={isLightMode}
-                products={filter("outerwear",allProducts)}
+                products={filter("outerwear", allProducts)}
               />
             }
           />
@@ -139,7 +135,7 @@ function App() {
               <Products
                 text="Tops"
                 lightMode={isLightMode}
-                products={filter("tops",allProducts)}
+                products={filter("tops", allProducts)}
               />
             }
           />
@@ -149,7 +145,7 @@ function App() {
               <Products
                 text="Bottoms"
                 lightMode={isLightMode}
-                products={filter("bottoms",allProducts)}
+                products={filter("bottoms", allProducts)}
               />
             }
           />
@@ -159,7 +155,7 @@ function App() {
               <Products
                 text="Accesories"
                 lightMode={isLightMode}
-                products={filter("accessories",allProducts)}
+                products={filter("accessories", allProducts)}
               />
             }
           />

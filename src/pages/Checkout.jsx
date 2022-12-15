@@ -4,22 +4,33 @@ import CheckoutForm from "../components/CheckoutForm";
 
 export default function Checkout(props) {
   return (
-    <Container
-      fluid
+    <div
+      className="w-100"
       style={{
-        height: "100vh",
         backgroundColor: props.lightMode ? "white" : "#121212",
+        color: props.lightMode ? "black" : "white",
       }}
     >
-      {props.clientSecret && (
-        <Elements
-          options={props.options}
-          stripe={props.stripePromise}
-          // key={props.clientSecret}
+      <Container
+        style={{
+          height: "80vh",
+        }}
+      >
+        <div
+          className="p-3"
+          style={{ backgroundColor: "lightgrey", borderRadius: "15px" }}
         >
-          <CheckoutForm />
-        </Elements>
-      )}
-    </Container>
+          {props.clientSecret && (
+            <Elements
+              options={props.options}
+              stripe={props.stripePromise}
+              key={props.clientSecret}
+            >
+              <CheckoutForm />
+            </Elements>
+          )}
+        </div>
+      </Container>
+    </div>
   );
 }
