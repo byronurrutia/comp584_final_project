@@ -4,6 +4,15 @@ import { Link } from "react-router-dom";
 import Account from "../auth/Account";
 
 export default function NavbarSection(props) {
+  
+  function calcTotal(){
+    let res = 0;
+    props.cartItems.forEach(element => {
+      res += element.price;
+    });
+    return res;
+  }
+  
   return (
     <Navbar
       collapseOnSelect
@@ -159,7 +168,7 @@ export default function NavbarSection(props) {
                     variant="dark"
                     size="large"
                     className="w-75 mx-auto"
-                    onClick={props.checkout}
+                    onClick={() => {props.checkout(calcTotal())}}
                     // disabled={!props.cartItems.length === 0}
                   >
                     Checkout

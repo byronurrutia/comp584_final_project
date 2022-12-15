@@ -83,6 +83,7 @@ export default function CheckoutForm(props) {
   };
 
   return (
+   
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button disabled={isLoading || !stripe || !elements} id="submit">

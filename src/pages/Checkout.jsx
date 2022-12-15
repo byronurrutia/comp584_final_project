@@ -16,6 +16,9 @@ export default function Checkout(props) {
           height: "80vh",
         }}
       >
+        <div className="container order__container">
+          <p>show items and totals here</p>
+        </div>
         <div
           className="p-3"
           style={{ backgroundColor: "lightgrey", borderRadius: "15px" }}
