@@ -1,6 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import Checkout from "./pages/Checkout";
 import axios from "axios";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
@@ -183,6 +185,14 @@ function App() {
               stripePromise={stripePromise}
             />
           }
+        />
+        <Route
+          path="/comp584_final_project/login"
+          element={<Login lightMode={isLightMode} />}
+        />
+        <Route
+          path="/comp584_final_project/register"
+          element={<Register lightMode={isLightMode} />}
         />
       </Route>
     </Routes>

@@ -44,7 +44,7 @@ export default function NavbarSection(props) {
 
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link onClick={() => handleNav("/comp584_final_project/")}>
+            <Nav.Link onClick={() => handleNav("/comp584_final_project/login")}>
               Sign In
             </Nav.Link>
             <NavDropdown
