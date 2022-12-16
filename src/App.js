@@ -43,7 +43,6 @@ function App() {
     cartItems.forEach((item) => {
       if (flag === true && item.id === product.id) {
         flag = false;
-        console.log("found");
       } else {
         temp.push(item);
       }
