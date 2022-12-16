@@ -1,6 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, redirect} from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -42,39 +42,56 @@ function App() {
     setIsLightMode((prev) => !prev);
   }
 
-  function addItem() {
-    setCartItems();
+  // function addItem() {
+  //   setCartItems();
+  // }
+  function addToCart(product){
+    let temp = cartItems;
+    temp.push(product);
+    setCartItems(temp);
+    console.log("function called here");
+    
   }
 
-  function removeItem() {
-    setCartItems();
-  }
-
-
-  function checkout() {
-    // Create PaymentIntent as soon as the page loads
-    fetch("https://themillenniumfalcon.junhechen.com//584final/api/v1/stripe/paymentIntend", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: 20000, currency:"USD",method:"card" }),
+  function removeItem(toremove) {
+    /*
+    let temp = [];
+    let removed = false;
+    cartItems.forEach((item) =>{
+      if(item === toremove && removed === false){
+        removed = true;
+      }else{
+        temp.push(item);
+      }
     })
+    */
+    setCartItems();
+    
+  }
+
+  function checkout(a) {
+    // Create PaymentIntent as soon as the page loads
+    fetch(
+      "https://themillenniumfalcon.junhechen.com//584final/api/v1/stripe/paymentIntend",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: a,
+          currency: "USD",
+          method: "card",
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-      console.log("clientsecret: " + clientSecret);
+    console.log("clientsecret: " + clientSecret);
   }
 
-  // class Product {
-  //   constructor(productName, productDiscription, productImages, productId) {
-  //     (this.productName = productName),
-  //       (this.productDiscription = productDiscription),
-  //       (this.productImages = productImages),
-  //       (this.productId = productId);
-  //   }
-  // }
-  function filter(category, products){
-    let outputArr = []
-    products.forEach(element => {
-      if(element.category === category){
+  function filter(category, products) {
+    let outputArr = [];
+    products.forEach((element) => {
+      if (element.category === category) {
         outputArr.push(element);
       }
     });
@@ -90,13 +107,11 @@ function App() {
         //console.log(res);
         const products = res.data;
         let resArr = [];
-        products.forEach(element => {
-          resArr.push(element)
+        products.forEach((element) => {
+          resArr.push(element);
         });
         //console.log(products);
         setAllProducts(resArr);
-        //console.log(typeof(allProducts))
-        //console.log(allProducts);
       })
       .catch((err) => {
         console.log(err);
@@ -129,7 +144,8 @@ function App() {
               <Products
                 text="Outerwear"
                 lightMode={isLightMode}
-                products={filter("outerwear",allProducts)}
+                products={filter("outerwear", allProducts)}
+                addToCart={addToCart}
               />
             }
           />
@@ -139,7 +155,8 @@ function App() {
               <Products
                 text="Tops"
                 lightMode={isLightMode}
-                products={filter("tops",allProducts)}
+                products={filter("tops", allProducts)}
+                addToCart={addToCart}
               />
             }
           />
@@ -149,7 +166,8 @@ function App() {
               <Products
                 text="Bottoms"
                 lightMode={isLightMode}
-                products={filter("bottoms",allProducts)}
+                products={filter("bottoms", allProducts)}
+                addToCart={addToCart}
               />
             }
           />
@@ -159,17 +177,19 @@ function App() {
               <Products
                 text="Accesories"
                 lightMode={isLightMode}
-                products={filter("accessories",allProducts)}
+                products={filter("accessories", allProducts)}
+                addToCart={addToCart}
               />
             }
           />
           <Route
             path="/comp584_final_project/all"
             element={
-              <Products
+              <Products 
                 text="All Products"
                 lightMode={isLightMode}
                 products={allProducts}
+                addToCart={addToCart}
               />
             }
           />
@@ -190,19 +210,8 @@ function App() {
             path="/comp584_final_project/login/callback"
             element={LoginCallback}
           />
-          <Route
-            path="*"
-            element={
-              <Dashboard
-                lightMode={isLightMode}
-                toggleMode={toggleMode}
-                cartItems={cartItems}
-                removeItem={removeItem}
-                checkout={checkout}
-              />
-            }
-          />
         </Route>
+        
       </Routes>
     </Security>
   );

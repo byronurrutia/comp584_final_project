@@ -13,7 +13,7 @@ export default function Products(props) {
       >
         {props.text}
       </h1>
-      <ProductSection lightMode={props.lightMode} products={props.products} />
+      <ProductSection addToCart={props.addToCart} lightMode={props.lightMode} products={props.products} />
     </div>
   );
 }
