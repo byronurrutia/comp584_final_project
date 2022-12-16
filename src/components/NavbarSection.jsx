@@ -2,6 +2,7 @@ import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { Moon, Sun } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router-dom";
 import Account from "../auth/Account";
+import { nanoid } from "nanoid";
 
 export default function NavbarSection(props) {
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ export default function NavbarSection(props) {
                 props.cartItems.map((item) => {
                   return (
                     <div
-                      key={item.id}
+                      key={nanoid()}
                       className="d-flex justify-content-between align-items-center"
                       style={{ minWidth: "350px" }}
                     >
