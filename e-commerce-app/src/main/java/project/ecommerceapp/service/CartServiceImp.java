@@ -20,13 +20,16 @@ public class CartServiceImp implements CartService{
     AppUserRepository appUserRepository;
 
     @Autowired
+    AppUserService appUserService;
+
+    @Autowired
     DatabaseProductRepository productRepository;
 
     @Autowired
     CartItemRepository cartItemRepository;
     @Override
-    public String addProduct(String oktaId, String stripeId) {
-        AppUser appUser = appUserRepository.findByOktaId(oktaId);
+    public String addProduct(String username, String stripeId) {
+        AppUser appUser = appUserService.loadUserByUsername(username);
         if(appUser == null) return "appuser not exist";
         DatabaseProduct product = productRepository.findByProductId(stripeId);
         if(product == null) return "product not exist";
@@ -38,8 +41,8 @@ public class CartServiceImp implements CartService{
     }
 
     @Override
-    public String remove(String oktaId, String stripeId) {
-        AppUser appUser = appUserRepository.findByOktaId(oktaId);
+    public String remove(String username, String stripeId) {
+        AppUser appUser = appUserService.loadUserByUsername(username);
         if(appUser == null) return "appuser not exist";
         List<CartItem> items = cartItemRepository.findCartItemByProductId(stripeId);
         CartItem item = items.size() == 0 ? null : items.get(0);
@@ -50,7 +53,7 @@ public class CartServiceImp implements CartService{
     }
 
     @Override
-    public String clear(String oktaId, String stripeId) {
+    public String clear(String username, String stripeId) {
         // not in used
         return "ok";
     }

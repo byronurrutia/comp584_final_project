@@ -7,11 +7,10 @@ import com.stripe.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-import project.ecommerceapp.dao.AppUserRepository;
-import project.ecommerceapp.dto.AddCartRequest;
+import project.ecommerceapp.dto.CartRequest;
 import project.ecommerceapp.dto.MyProduct;
 import project.ecommerceapp.entity.CartItem;
-import project.ecommerceapp.entity.DatabaseProduct;
+import project.ecommerceapp.service.AppUserService;
 import project.ecommerceapp.service.CartService;
 
 import java.util.ArrayList;
@@ -29,27 +28,27 @@ public class CartController {
     @Autowired
     CartService cartService;
     @Autowired
-    AppUserRepository appUserRepository;
+    AppUserService appUserService;
 
     @PostMapping("/add")
-    public String addCart(@RequestBody AddCartRequest addCartRequest){
-        return cartService.addProduct(addCartRequest.getOktaId(),addCartRequest.getStripeId());
+    public String addCart(@RequestBody CartRequest cartRequest){
+        return cartService.addProduct(cartRequest.getUsername(), cartRequest.getStripeId());
     }
 
     @PostMapping("/remove")
-    public String remove(@RequestBody AddCartRequest addCartRequest){
-        return cartService.remove(addCartRequest.getOktaId(), addCartRequest.getStripeId());
+    public String remove(@RequestBody CartRequest cartRequest){
+        return cartService.remove(cartRequest.getUsername(), cartRequest.getStripeId());
     }
 
     @PostMapping("/clear")
-    public String clear(@RequestBody AddCartRequest addCartRequest){
-        return cartService.clear(addCartRequest.getOktaId(),addCartRequest.getStripeId());
+    public String clear(@RequestBody CartRequest cartRequest){
+        return cartService.clear(cartRequest.getUsername(), cartRequest.getStripeId());
     }
 
     @GetMapping("/load")
     public List<MyProduct> loadCart(@RequestBody String oktaId) throws StripeException {
         List<MyProduct> shoppingcart = new ArrayList<>();
-        Set<CartItem> list = appUserRepository.findByOktaId(oktaId).getCart();
+        Set<CartItem> list = appUserService.loadUserByUsername(oktaId).getCart();
         Stripe.apiKey = secretKey;
         for(CartItem item : list){
             Product product = Product.retrieve(item.getProductId());
