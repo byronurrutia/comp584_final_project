@@ -3,7 +3,7 @@ package project.ecommerceapp.dto;
 import lombok.Data;
 
 @Data
-public class AddCartRequest {
-    private String oktaId;
+public class CartRequest {
+    private String username;
     private String stripeId;
 }

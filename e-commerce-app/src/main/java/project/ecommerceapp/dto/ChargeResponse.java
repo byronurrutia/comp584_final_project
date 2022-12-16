@@ -9,4 +9,5 @@ public class ChargeResponse {
     private String status;
     private String chargeId;
     private String balance_transaction;
+
 }

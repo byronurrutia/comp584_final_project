@@ -78,10 +78,18 @@ public class APIController {
     }
 
     @GetMapping("/get")
-    public Product getId(@RequestBody String id) throws StripeException {
+    public MyProduct getId(@RequestBody String id) throws StripeException {
         Stripe.apiKey = secretKey;
         Product product = Product.retrieve(id);
-        return ApiResource.GSON.fromJson(product.getLastResponse().body(), Product.class);
+        MyProduct myProduct = new MyProduct();
+        myProduct.setProductName(product.getName());
+        myProduct.setId(product.getId());
+        myProduct.setDescription(product.getDescription());
+        myProduct.setImage_url(product.getImages().toArray(new String[0]));
+        Price price = Price.retrieve(product.getDefaultPrice());
+        myProduct.setPrice(price.getUnitAmount());
+        myProduct.setCategory(product.getMetadata().get("category"));
+        return myProduct;
     }
 
     @GetMapping("/price")
