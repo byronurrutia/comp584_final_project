@@ -1,6 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Routes, useNavigate, redirect} from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -42,34 +42,18 @@ function App() {
     setIsLightMode((prev) => !prev);
   }
 
-  // function addItem() {
-  //   setCartItems();
-  // }
-  function addToCart(product){
-    let temp = cartItems;
+  function addToCart(product) {
+    let temp = [...cartItems];
     temp.push(product);
     setCartItems(temp);
-    console.log("function called here");
-    
   }
 
-  function removeItem(toremove) {
-    /*
-    let temp = [];
-    let removed = false;
-    cartItems.forEach((item) =>{
-      if(item === toremove && removed === false){
-        removed = true;
-      }else{
-        temp.push(item);
-      }
-    })
-    */
-    setCartItems();
-    
+  function removeItem(product) {
+    let temp = [...cartItems];
+    setCartItems(temp.filter((item) => item !== product));
   }
 
-  function checkout(a) {
+  function checkout() {
     // Create PaymentIntent as soon as the page loads
     fetch(
       "https://themillenniumfalcon.junhechen.com//584final/api/v1/stripe/paymentIntend",
@@ -77,7 +61,9 @@ function App() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: a,
+          amount: cartItems.reduce((acc, curr) => {
+            return acc + curr.price;
+          }),
           currency: "USD",
           method: "card",
         }),
@@ -104,7 +90,6 @@ function App() {
         "https://themillenniumfalcon.junhechen.com/584final/api/v1/stripe/getAllItem"
       )
       .then((res) => {
-        //console.log(res);
         const products = res.data;
         let resArr = [];
         products.forEach((element) => {
@@ -129,6 +114,7 @@ function App() {
           path="/comp584_final_project"
           element={
             <Dashboard
+              key={cartItems}
               lightMode={isLightMode}
               toggleMode={toggleMode}
               cartItems={cartItems}
@@ -185,7 +171,7 @@ function App() {
           <Route
             path="/comp584_final_project/all"
             element={
-              <Products 
+              <Products
                 text="All Products"
                 lightMode={isLightMode}
                 products={allProducts}
@@ -211,7 +197,6 @@ function App() {
             element={LoginCallback}
           />
         </Route>
-        
       </Routes>
     </Security>
   );

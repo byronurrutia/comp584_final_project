@@ -6,6 +6,7 @@ export default function Dashboard(props) {
   return (
     <>
       <NavbarSection
+        key={props.cartItems}
         lightMode={props.lightMode}
         toggleMode={props.toggleMode}
         cartItems={props.cartItems}
