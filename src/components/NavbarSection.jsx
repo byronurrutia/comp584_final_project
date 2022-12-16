@@ -1,7 +1,6 @@
 import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { Moon, Sun } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router-dom";
-import Account from "../auth/Account";
 import { nanoid } from "nanoid";
 
 export default function NavbarSection(props) {
@@ -45,8 +44,8 @@ export default function NavbarSection(props) {
 
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link>
-              <Account />
+            <Nav.Link onClick={() => handleNav("/comp584_final_project/")}>
+              Sign In
             </Nav.Link>
             <NavDropdown
               title="Product Catagories"
