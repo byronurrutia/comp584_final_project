@@ -201,7 +201,7 @@ function App() {
     <CookiesProvider>
       <Routes>
         <Route
-          path="/comp584_final_project"
+          path="/"
           element={
             <Dashboard
               key={cartItems}
@@ -219,7 +219,7 @@ function App() {
         >
           <Route index element={<Home lightMode={isLightMode} />} />
           <Route
-            path="/comp584_final_project/outerwear"
+            path="/outerwear"
             element={
               <Products
                 text="Outerwear"
@@ -230,7 +230,7 @@ function App() {
             }
           />
           <Route
-            path="/comp584_final_project/tops"
+            path="/tops"
             element={
               <Products
                 text="Tops"
@@ -241,7 +241,7 @@ function App() {
             }
           />
           <Route
-            path="/comp584_final_project/bottoms"
+            path="/bottoms"
             element={
               <Products
                 text="Bottoms"
@@ -252,7 +252,7 @@ function App() {
             }
           />
           <Route
-            path="/comp584_final_project/accessories"
+            path="/accessories"
             element={
               <Products
                 text="Accesories"
@@ -263,7 +263,7 @@ function App() {
             }
           />
           <Route
-            path="/comp584_final_project/all"
+            path="/all"
             element={
               <Products
                 text="All Products"
@@ -274,7 +274,7 @@ function App() {
             }
           />
           <Route
-            path="/comp584_final_project/checkout"
+            path="/checkout"
             element={
               <Checkout
                 lightMode={isLightMode}
@@ -287,11 +287,11 @@ function App() {
             }
           />
           <Route
-            path="/comp584_final_project/login"
+            path="/login"
             element={<Login toggleUser={toggleUser} lightMode={isLightMode} />}
           />
           <Route
-            path="/comp584_final_project/register"
+            path="/register"
             element={<Register lightMode={isLightMode} />}
           />
         </Route>

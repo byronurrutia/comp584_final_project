@@ -45,7 +45,7 @@ export default function NavbarSection(props) {
       className="shadow"
     >
       <Container fluid>
-        <Link to={"/comp584_final_project"}>
+        <Link to={"/"}>
           <Navbar.Brand>
             <svg
               width="30"
@@ -78,7 +78,7 @@ export default function NavbarSection(props) {
               </div>
             ) : (
               <Nav.Link
-                onClick={() => handleNav("/comp584_final_project/login")}
+                onClick={() => handleNav("/login")}
               >
                 Sign In
               </Nav.Link>
@@ -90,28 +90,28 @@ export default function NavbarSection(props) {
               variant={props.lightMode ? "light" : "dark"}
             >
               <NavDropdown.Item
-                onClick={() => handleNav("/comp584_final_project/outerwear")}
+                onClick={() => handleNav("/outerwear")}
               >
                 Outerwear
               </NavDropdown.Item>
               <NavDropdown.Item
-                onClick={() => handleNav("/comp584_final_project/tops")}
+                onClick={() => handleNav("/tops")}
               >
                 Tops
               </NavDropdown.Item>
               <NavDropdown.Item
-                onClick={() => handleNav("/comp584_final_project/bottoms")}
+                onClick={() => handleNav("/bottoms")}
               >
                 Bottoms
               </NavDropdown.Item>
               <NavDropdown.Item
-                onClick={() => handleNav("/comp584_final_project/accessories")}
+                onClick={() => handleNav("/accessories")}
               >
                 Accessories
               </NavDropdown.Item>
 
               <NavDropdown.Item
-                onClick={() => handleNav("/comp584_final_project/all")}
+                onClick={() => handleNav("/all")}
               >
                 All Products
               </NavDropdown.Item>
@@ -178,7 +178,7 @@ export default function NavbarSection(props) {
                   size="large"
                   className="w-75 mx-auto"
                   onClick={() => {
-                    handleClick("/comp584_final_project/checkout");
+                    handleClick("/checkout");
                   }}
                   disabled={props.cartItems.length === 0}
                 >

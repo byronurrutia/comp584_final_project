@@ -49,7 +49,7 @@ export default function Login(props) {
           JSON.stringify(response.data.userName)
         );
         props.toggleUser();
-        navigate("/comp584_final_project");
+        navigate("/");
       })
       .catch(function (error) {
         console.log(error);
@@ -109,7 +109,7 @@ export default function Login(props) {
               Submit
             </Button>
           </Form>
-          <Link to={"/comp584_final_project/register"}>
+          <Link to={"/register"}>
             Need an account? Sign Up
           </Link>
         </div>
