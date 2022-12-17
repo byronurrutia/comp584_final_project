@@ -15,7 +15,7 @@ export default function Checkout(props) {
       <Container
         className="d-md-flex justify-content-center align-items-center"
         style={{
-          height: "80vh",
+          minHeight: "80vh",
         }}
       >
         <div
