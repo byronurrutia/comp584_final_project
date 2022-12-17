@@ -13,13 +13,13 @@ export default function Checkout(props) {
       }}
     >
       <Container
-        className="d-flex justify-content-center align-items-center"
+        className="d-md-flex justify-content-center align-items-center"
         style={{
           height: "80vh",
         }}
       >
         <div
-          className="d-flex flex-column text-start me-5 shadow p-5 rounded checkoutScrroll"
+          className="d-flex flex-column text-start me-md-5 shadow p-5 rounded mx-sm-2 my-sm-5 checkoutScrroll"
           style={{
             height: 400,
             overflowY: "auto",
