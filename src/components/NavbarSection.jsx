@@ -2,6 +2,7 @@ import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { Moon, Sun } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
+import axios from "axios";
 
 export default function NavbarSection(props) {
   const navigate = useNavigate();
@@ -12,6 +13,30 @@ export default function NavbarSection(props) {
   function handleNav(path) {
     navigate(path);
   }
+
+  function logout() {
+    const config = {
+      method: "post",
+      url: "https://themillenniumfalcon.junhechen.com/584final/api/v1/logout",
+      headers: {
+        Authorization: `${sessionStorage.getItem("sessionId")}`,
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        props.toggleUser();
+        props.clearUserCart();
+        props.updateUserCart();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    sessionStorage.clear();
+  }
+
   return (
     <Navbar
       collapseOnSelect
@@ -44,9 +69,22 @@ export default function NavbarSection(props) {
 
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link onClick={() => handleNav("/comp584_final_project/login")}>
-              Sign In
-            </Nav.Link>
+            {props.isUser ? (
+              <div className="d-flex">
+                <Navbar.Brand>
+                  Hello{" "}
+                  {sessionStorage.getItem("displayName").replace(/['"]+/g, "")}
+                </Navbar.Brand>
+                <Nav.Link onClick={() => logout()}>Sign Out</Nav.Link>
+              </div>
+            ) : (
+              <Nav.Link
+                onClick={() => handleNav("/comp584_final_project/login")}
+              >
+                Sign In
+              </Nav.Link>
+            )}
+
             <NavDropdown
               title="Product Catagories"
               id="collasible-nav-dropdown"

@@ -10,14 +10,19 @@ import Checkout from "./pages/Checkout";
 import axios from "axios";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { CookiesProvider } from "react-cookie";
+import { useCookies } from "react-cookie";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
 function App() {
+  const [cookies, setCookie] = useCookies(["cartItems"]);
+
   const [isLightMode, setIsLightMode] = useState(true);
   const [allProducts, setAllProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [clientSecret, setClientSecret] = useState("");
+  const [isUser, setIsUser] = useState(false);
 
   const appearance = {
     theme: "stripe",
@@ -27,14 +32,95 @@ function App() {
     appearance,
   };
 
+  function toggleUser() {
+    setIsUser((prev) => !prev);
+  }
+
   function toggleMode() {
     setIsLightMode((prev) => !prev);
+  }
+
+  function clearUserCart() {
+    var config = {
+      method: "post",
+      url: "https://themillenniumfalcon.junhechen.com/584final/api/v1/cart/clear",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: sessionStorage.getItem("userName").replace(/['"]+/g, ""),
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  function updateUserCart() {
+    let temp = [];
+    cartItems.forEach((item) => {
+      temp.push(item.id);
+    });
+    var axios = require("axios");
+    var data = JSON.stringify({
+      userName: sessionStorage.getItem("userName").replace(/['"]+/g, ""),
+      stripeIds: temp,
+    });
+
+    var config = {
+      method: "post",
+      url: "https://themillenniumfalcon.junhechen.com/584final/api/v1/cart/updateCart",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  function loadCart() {
+    if (!isUser) {
+      console.log("No user logged in");
+      return false;
+    }
+    let temp = [];
+    var config = {
+      method: "post",
+      url: "https://themillenniumfalcon.junhechen.com/584final/api/v1/cart/load",
+      headers: {
+        "Content-Type": "text/plain",
+      },
+      data: sessionStorage.getItem("userName").replace(/['"]+/g, ""),
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        response.data.forEach((element) => {
+          temp.push(element);
+        });
+        setCartItems(temp);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   function addToCart(product) {
     let temp = [...cartItems];
     temp.push(product);
     setCartItems(temp);
+    setCookie("cartItems", temp);
   }
 
   function removeItem(product) {
@@ -48,6 +134,7 @@ function App() {
       }
     });
     setCartItems(temp);
+    setCookie("cartItems", temp);
   }
 
   function checkout() {
@@ -84,6 +171,10 @@ function App() {
   }
 
   useEffect(() => {
+    loadCart();
+  }, [isUser]);
+
+  useEffect(() => {
     axios
       .get(
         "https://themillenniumfalcon.junhechen.com/584final/api/v1/stripe/getAllItem"
@@ -100,101 +191,115 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
+    console.log(cookies.cartItems);
+    setCartItems(cookies.cartItems === undefined ? [] : cookies.cartItems);
   }, []);
 
   return (
-    <Routes>
-      <Route
-        path="/comp584_final_project"
-        element={
-          <Dashboard
-            key={cartItems}
-            lightMode={isLightMode}
-            toggleMode={toggleMode}
-            cartItems={cartItems}
-            removeItem={removeItem}
-            checkout={checkout}
+    <CookiesProvider>
+      <Routes>
+        <Route
+          path="/comp584_final_project"
+          element={
+            <Dashboard
+              key={cartItems}
+              lightMode={isLightMode}
+              toggleMode={toggleMode}
+              cartItems={cartItems}
+              removeItem={removeItem}
+              checkout={checkout}
+              isUser={isUser}
+              toggleUser={toggleUser}
+              clearUserCart={clearUserCart}
+              updateUserCart={updateUserCart}
+            />
+          }
+        >
+          <Route index element={<Home lightMode={isLightMode} />} />
+          <Route
+            path="/comp584_final_project/outerwear"
+            element={
+              <Products
+                text="Outerwear"
+                lightMode={isLightMode}
+                products={filter("outerwear", allProducts)}
+                addToCart={addToCart}
+              />
+            }
           />
-        }
-      >
-        <Route index element={<Home lightMode={isLightMode} />} />
-        <Route
-          path="/comp584_final_project/outerwear"
-          element={
-            <Products
-              text="Outerwear"
-              lightMode={isLightMode}
-              products={filter("outerwear", allProducts)}
-              addToCart={addToCart}
-            />
-          }
-        />
-        <Route
-          path="/comp584_final_project/tops"
-          element={
-            <Products
-              text="Tops"
-              lightMode={isLightMode}
-              products={filter("tops", allProducts)}
-              addToCart={addToCart}
-            />
-          }
-        />
-        <Route
-          path="/comp584_final_project/bottoms"
-          element={
-            <Products
-              text="Bottoms"
-              lightMode={isLightMode}
-              products={filter("bottoms", allProducts)}
-              addToCart={addToCart}
-            />
-          }
-        />
-        <Route
-          path="/comp584_final_project/accessories"
-          element={
-            <Products
-              text="Accesories"
-              lightMode={isLightMode}
-              products={filter("accessories", allProducts)}
-              addToCart={addToCart}
-            />
-          }
-        />
-        <Route
-          path="/comp584_final_project/all"
-          element={
-            <Products
-              text="All Products"
-              lightMode={isLightMode}
-              products={allProducts}
-              addToCart={addToCart}
-            />
-          }
-        />
-        <Route
-          path="/comp584_final_project/checkout"
-          element={
-            <Checkout
-              lightMode={isLightMode}
-              appearance={appearance}
-              options={options}
-              clientSecret={clientSecret}
-              stripePromise={stripePromise}
-            />
-          }
-        />
-        <Route
-          path="/comp584_final_project/login"
-          element={<Login lightMode={isLightMode} />}
-        />
-        <Route
-          path="/comp584_final_project/register"
-          element={<Register lightMode={isLightMode} />}
-        />
-      </Route>
-    </Routes>
+          <Route
+            path="/comp584_final_project/tops"
+            element={
+              <Products
+                text="Tops"
+                lightMode={isLightMode}
+                products={filter("tops", allProducts)}
+                addToCart={addToCart}
+              />
+            }
+          />
+          <Route
+            path="/comp584_final_project/bottoms"
+            element={
+              <Products
+                text="Bottoms"
+                lightMode={isLightMode}
+                products={filter("bottoms", allProducts)}
+                addToCart={addToCart}
+              />
+            }
+          />
+          <Route
+            path="/comp584_final_project/accessories"
+            element={
+              <Products
+                text="Accesories"
+                lightMode={isLightMode}
+                products={filter("accessories", allProducts)}
+                addToCart={addToCart}
+              />
+            }
+          />
+          <Route
+            path="/comp584_final_project/all"
+            element={
+              <Products
+                text="All Products"
+                lightMode={isLightMode}
+                products={allProducts}
+                addToCart={addToCart}
+              />
+            }
+          />
+          <Route
+            path="/comp584_final_project/checkout"
+            element={
+              <Checkout
+                lightMode={isLightMode}
+                appearance={appearance}
+                options={options}
+                clientSecret={clientSecret}
+                stripePromise={stripePromise}
+              />
+            }
+          />
+          <Route
+            path="/comp584_final_project/login"
+            element={
+              <Login
+                toggleUser={toggleUser}
+                lightMode={isLightMode}
+                loadCart={loadCart}
+              />
+            }
+          />
+          <Route
+            path="/comp584_final_project/register"
+            element={<Register lightMode={isLightMode} />}
+          />
+        </Route>
+      </Routes>
+    </CookiesProvider>
   );
 }
 

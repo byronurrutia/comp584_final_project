@@ -1,14 +1,16 @@
+import axios from "axios";
 import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login(props) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  console.log(formData);
+  // console.log(formData);
 
   function handleChange(event) {
     setFormData((prev) => {
@@ -21,7 +23,41 @@ export default function Login(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    let text = `${formData.email}:${formData.password}`;
+    let encoded = window.btoa(text);
+    console.log(encoded);
     console.log("Submitted!");
+
+    var config = {
+      method: "post",
+      url: "https://themillenniumfalcon.junhechen.com/584final/api/v1/login",
+      headers: {
+        "Content-Type": "text/plain",
+      },
+      data: encoded,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        sessionStorage.setItem(
+          "sessionId",
+          JSON.stringify(response.data.sessionId)
+        );
+        sessionStorage.setItem(
+          "displayName",
+          JSON.stringify(response.data.displayName)
+        );
+        sessionStorage.setItem(
+          "userName",
+          JSON.stringify(response.data.userName)
+        );
+        props.toggleUser();
+        navigate("/comp584_final_project");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (
