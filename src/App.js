@@ -195,6 +195,11 @@ function App() {
         console.log(err);
       });
     setCartItems(cookies.cartItems === undefined ? [] : cookies.cartItems);
+
+    let tempUser = sessionStorage.getItem("userName");
+    if (tempUser) {
+      setIsUser(true);
+    }
   }, []);
 
   return (
