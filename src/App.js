@@ -41,13 +41,17 @@ function App() {
   }
 
   function clearUserCart() {
+    var data = JSON.stringify({
+      username: sessionStorage.getItem("userName").replace(/['"]+/g, ""),
+      stripeId: "lol",
+    });
     var config = {
       method: "post",
       url: "https://themillenniumfalcon.junhechen.com/584final/api/v1/cart/clear",
       headers: {
         "Content-Type": "application/json",
       },
-      data: sessionStorage.getItem("userName").replace(/['"]+/g, ""),
+      data: data,
     };
 
     axios(config)
@@ -64,7 +68,7 @@ function App() {
     cartItems.forEach((item) => {
       temp.push(item.id);
     });
-    var axios = require("axios");
+    console.log(temp);
     var data = JSON.stringify({
       userName: sessionStorage.getItem("userName").replace(/['"]+/g, ""),
       stripeIds: temp,
@@ -82,34 +86,6 @@ function App() {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
-  function loadCart() {
-    if (!isUser) {
-      console.log("No user logged in");
-      return false;
-    }
-    let temp = [];
-    var config = {
-      method: "post",
-      url: "https://themillenniumfalcon.junhechen.com/584final/api/v1/cart/load",
-      headers: {
-        "Content-Type": "text/plain",
-      },
-      data: sessionStorage.getItem("userName").replace(/['"]+/g, ""),
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        response.data.forEach((element) => {
-          temp.push(element);
-        });
-        setCartItems(temp);
       })
       .catch(function (error) {
         console.log(error);
@@ -171,6 +147,33 @@ function App() {
   }
 
   useEffect(() => {
+    function loadCart() {
+      if (!isUser) {
+        console.log("No user logged in");
+        return;
+      }
+      let temp = [];
+      var config = {
+        method: "post",
+        url: "https://themillenniumfalcon.junhechen.com/584final/api/v1/cart/load",
+        headers: {
+          "Content-Type": "text/plain",
+        },
+        data: sessionStorage.getItem("userName").replace(/['"]+/g, ""),
+      };
+
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          response.data.forEach((element) => {
+            temp.push(element);
+          });
+          setCartItems(temp);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
     loadCart();
   }, [isUser]);
 
@@ -191,7 +194,6 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-    console.log(cookies.cartItems);
     setCartItems(cookies.cartItems === undefined ? [] : cookies.cartItems);
   }, []);
 
@@ -280,18 +282,13 @@ function App() {
                 options={options}
                 clientSecret={clientSecret}
                 stripePromise={stripePromise}
+                cartItems={cartItems}
               />
             }
           />
           <Route
             path="/comp584_final_project/login"
-            element={
-              <Login
-                toggleUser={toggleUser}
-                lightMode={isLightMode}
-                loadCart={loadCart}
-              />
-            }
+            element={<Login toggleUser={toggleUser} lightMode={isLightMode} />}
           />
           <Route
             path="/comp584_final_project/register"

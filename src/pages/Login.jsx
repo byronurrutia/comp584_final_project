@@ -10,8 +10,6 @@ export default function Login(props) {
     password: "",
   });
 
-  // console.log(formData);
-
   function handleChange(event) {
     setFormData((prev) => {
       return {
@@ -25,8 +23,6 @@ export default function Login(props) {
     event.preventDefault();
     let text = `${formData.email}:${formData.password}`;
     let encoded = window.btoa(text);
-    console.log(encoded);
-    console.log("Submitted!");
 
     var config = {
       method: "post",

@@ -26,15 +26,14 @@ export default function NavbarSection(props) {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        props.toggleUser();
         props.clearUserCart();
         props.updateUserCart();
+        props.toggleUser();
+        sessionStorage.clear();
       })
       .catch(function (error) {
         console.log(error);
       });
-
-    sessionStorage.clear();
   }
 
   return (
@@ -174,36 +173,17 @@ export default function NavbarSection(props) {
               )}
               <NavDropdown.Divider />
               <div className="w-100 d-flex">
-                {props.cartItems.length === 0 ? (
-                  <Button
-                    variant="dark"
-                    disabled
-                    size="large"
-                    className="w-75 mx-auto"
-                  >
-                    Checkout
-                  </Button>
-                ) : (
-                  // <Link
-                  //   to={"/comp584_final_project/checkout"}
-                  //   className="w-100 d-flex justify-content-center"
-                  //   style={{
-                  //     textDecoration: "none",
-                  //     color: "inherit",
-                  //   }}
-                  // >
-                  <Button
-                    variant="dark"
-                    size="large"
-                    className="w-75 mx-auto"
-                    onClick={() => {
-                      handleClick("/comp584_final_project/checkout");
-                    }}
-                  >
-                    Checkout
-                  </Button>
-                  //  </Link>
-                )}
+                <Button
+                  variant="dark"
+                  size="large"
+                  className="w-75 mx-auto"
+                  onClick={() => {
+                    handleClick("/comp584_final_project/checkout");
+                  }}
+                  disabled={props.cartItems.length === 0}
+                >
+                  Checkout
+                </Button>
               </div>
             </NavDropdown>
             <button

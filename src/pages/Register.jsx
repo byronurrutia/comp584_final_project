@@ -74,7 +74,7 @@ export default function Register(props) {
       >
         <div className="p-5 border shadow rounded w-50">
           <h1 className="w-100 text-center">Register</h1>
-          {isRegistered == false ? (
+          {isRegistered === false ? (
             <Form onSubmit={handleSubmit}>
               <Form.Group
                 className="mb-3"
