@@ -53,6 +53,7 @@ export default function Login(props) {
       })
       .catch(function (error) {
         console.log(error);
+        window.alert("Please check your form input or try again later");
       });
   }
 
@@ -72,11 +73,12 @@ export default function Login(props) {
       >
         <div
           className="p-5 border shadow rounded w-50"
-          style={{ minWidth: 400 }}
+          style={{ minWidth: 300 }}
         >
           <h1 className="w-100 text-center">Sign In</h1>
-          <Form className="py-3" onSubmit={handleSubmit}>
+          <Form className="py-3" onSubmit={handleSubmit} noValidate>
             <Form.Group
+              required
               className="mb-3"
               controlId="email"
               onChange={handleChange}
@@ -84,9 +86,13 @@ export default function Login(props) {
             >
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" placeholder="name@example.com" />
+              <Form.Control.Feedback type="invalid">
+                Please check your Email or Password or try again later
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
+              required
               className="mb-3"
               controlId="password"
               onChange={handleChange}
@@ -94,6 +100,9 @@ export default function Login(props) {
             >
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" />
+              <Form.Control.Feedback type="invalid">
+                Please check your Email or Password or try again later
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Button variant="primary" type="submit">

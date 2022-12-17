@@ -57,6 +57,7 @@ export default function Register(props) {
           console.log("Error", error.message);
         }
         console.log(error.config);
+        window.alert("Account already exist or try again later");
       });
   }
 
@@ -74,7 +75,7 @@ export default function Register(props) {
       >
         <div
           className="p-5 m-5 border shadow rounded w-50"
-          style={{ minWidth: 400 }}
+          style={{ minWidth: 300 }}
         >
           <h1 className="w-100 text-center">Register</h1>
           {isRegistered === false ? (
