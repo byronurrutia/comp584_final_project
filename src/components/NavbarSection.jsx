@@ -77,11 +77,7 @@ export default function NavbarSection(props) {
                 <Nav.Link onClick={() => logout()}>Sign Out</Nav.Link>
               </div>
             ) : (
-              <Nav.Link
-                onClick={() => handleNav("/login")}
-              >
-                Sign In
-              </Nav.Link>
+              <Nav.Link onClick={() => handleNav("/login")}>Sign In</Nav.Link>
             )}
 
             <NavDropdown
@@ -89,30 +85,20 @@ export default function NavbarSection(props) {
               id="collasible-nav-dropdown"
               variant={props.lightMode ? "light" : "dark"}
             >
-              <NavDropdown.Item
-                onClick={() => handleNav("/outerwear")}
-              >
+              <NavDropdown.Item onClick={() => handleNav("/outerwear")}>
                 Outerwear
               </NavDropdown.Item>
-              <NavDropdown.Item
-                onClick={() => handleNav("/tops")}
-              >
+              <NavDropdown.Item onClick={() => handleNav("/tops")}>
                 Tops
               </NavDropdown.Item>
-              <NavDropdown.Item
-                onClick={() => handleNav("/bottoms")}
-              >
+              <NavDropdown.Item onClick={() => handleNav("/bottoms")}>
                 Bottoms
               </NavDropdown.Item>
-              <NavDropdown.Item
-                onClick={() => handleNav("/accessories")}
-              >
+              <NavDropdown.Item onClick={() => handleNav("/accessories")}>
                 Accessories
               </NavDropdown.Item>
 
-              <NavDropdown.Item
-                onClick={() => handleNav("/all")}
-              >
+              <NavDropdown.Item onClick={() => handleNav("/all")}>
                 All Products
               </NavDropdown.Item>
             </NavDropdown>

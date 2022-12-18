@@ -16,7 +16,7 @@ import { useCookies } from "react-cookie";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
 function App() {
-  const [cookies, setCookie] = useCookies(["cartItems"]);
+  const [cookies, setCookie] = useCookies(["webData"]);
 
   const [isLightMode, setIsLightMode] = useState(true);
   const [allProducts, setAllProducts] = useState([]);
@@ -41,6 +41,18 @@ function App() {
 
   function toggleMode() {
     setIsLightMode((prev) => !prev);
+    let temp = isLightMode;
+    // console.log(`temp: ${temp}`);
+    // console.log(`state: ${isLightMode}`);
+    if (temp === true) {
+      setCookie("lightMode", "true");
+      // console.log(`first condition`);
+    }
+    if (temp == false) {
+      setCookie("lightMode", "false");
+      // console.log(`second condition`);
+    }
+    // console.log(`cookie: ${cookies.lightMode}`);
   }
 
   function clearUserCart() {
@@ -198,7 +210,11 @@ function App() {
         console.log(err);
       });
     setCartItems(cookies.cartItems === undefined ? [] : cookies.cartItems);
-
+    console.log(`LightMode: ${cookies.lightMode}`);
+    console.log(cookies.lightMode === "true");
+    setIsLightMode(
+      cookies.lightMode === undefined ? true : cookies.lightMode === "false"
+    );
     let tempUser = sessionStorage.getItem("userName");
     if (tempUser) {
       setIsUser(true);
