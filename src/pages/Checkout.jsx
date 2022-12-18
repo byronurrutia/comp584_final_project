@@ -21,7 +21,7 @@ export default function Checkout(props) {
         <div
           className="d-flex flex-column text-start me-md-5 shadow p-5 rounded mx-sm-2 my-sm-5 checkoutScrroll"
           style={{
-            height: 400,
+            minHeight: 400,
             overflowY: "auto",
             position: "relative",
           }}
