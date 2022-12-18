@@ -25,7 +25,10 @@ function App() {
   const [isUser, setIsUser] = useState(false);
 
   const appearance = {
-    theme: "stripe",
+    theme: isLightMode ? "flat" : "night",
+    variables: {
+      colorPrimary: isLightMode ? "007aff" : "#ffffff",
+    },
   };
   const options = {
     clientSecret,
