@@ -13,19 +13,12 @@ export default function Checkout(props) {
       }}
     >
       <Container
-        className="d-md-flex justify-content-center align-items-center"
+        className="d-md-flex"
         style={{
           minHeight: "80vh",
         }}
       >
-        <div
-          className="d-flex flex-column text-start me-md-5 shadow p-5 rounded mx-sm-2 my-sm-5 checkoutScrroll"
-          style={{
-            minHeight: 400,
-            overflowY: "auto",
-            position: "relative",
-          }}
-        >
+        <div className="d-flex w-100 w-md-50 flex-column text-start p-md-5 p-3 my-3 me-md-4 ">
           <h1>
             Total: $
             {(
@@ -42,8 +35,8 @@ export default function Checkout(props) {
             return (
               <div
                 key={nanoid()}
-                className="d-flex align-items-center border rounded my-2"
-                style={{ minWidth: "350px" }}
+                className="d-flex align-items-center border rounded my-1"
+                style={{ minWidth: "250px" }}
               >
                 {item.image_url.length !== 0 ? (
                   <img
@@ -70,8 +63,11 @@ export default function Checkout(props) {
           })}
         </div>
         <div
-          className="p-3"
-          style={{ backgroundColor: "lightgrey", borderRadius: "15px" }}
+          className="w-100 w-md-50 p-md-5 p-2 my-3"
+          style={{
+            backgroundColor: "lightgrey",
+            borderRadius: "15px",
+          }}
         >
           {props.clientSecret && (
             <Elements
@@ -79,7 +75,7 @@ export default function Checkout(props) {
               stripe={props.stripePromise}
               key={props.clientSecret}
             >
-              <CheckoutForm />
+              <CheckoutForm cartItems={props.cartItems} />
             </Elements>
           )}
         </div>

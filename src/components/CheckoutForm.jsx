@@ -3,7 +3,10 @@ import {
   PaymentElement,
   useStripe,
   useElements,
+  AddressElement,
 } from "@stripe/react-stripe-js";
+import { Accordion } from "react-bootstrap";
+import axios from "axios";
 
 export default function CheckoutForm(props) {
   const stripe = useStripe();
@@ -11,6 +14,47 @@ export default function CheckoutForm(props) {
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [address, setAddress] = useState();
+
+  function placeOrder() {
+    let temp = [];
+    props.cartItems.forEach((element) => {
+      let tempObj = {
+        imageUrl: element.img_url,
+        unitPrice: element.price,
+        productId: element.id,
+      };
+      temp.push(tempObj);
+    });
+    var data = JSON.stringify({
+      email: sessionStorage.getItem("userName").replace(/['"]+/g, ""),
+      address: `${address.line1}, ${address.city}, ${address.state} ${address.postal_code}`,
+      orderTotal: props.cartItems.reduce(
+        (accumulator, currentValue) =>
+          accumulator + parseInt(currentValue.price),
+        0
+      ),
+      itemList: temp,
+    });
+    // console.log(`placed order: ${data}`);
+    var config = {
+      method: "post",
+      url: "https://themillenniumfalcon.junhechen.com/584final/api/v1/order/placeOrder",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        sessionStorage.setItem("orderTracking", response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   useEffect(() => {
     if (!stripe) {
@@ -59,8 +103,7 @@ export default function CheckoutForm(props) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-
-        return_url: "https://e-commerce.junhechen.com/",
+        return_url: "http://localhost:3000/confirmed/",
       },
     });
 
@@ -73,7 +116,10 @@ export default function CheckoutForm(props) {
       setMessage(error.message);
     } else {
       setMessage("An unexpected error occurred.");
+      window.alert(message);
     }
+
+    placeOrder();
 
     setIsLoading(false);
   };
@@ -84,8 +130,52 @@ export default function CheckoutForm(props) {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
+      <Accordion defaultActiveKey="0">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>Payment</Accordion.Header>
+          <Accordion.Body>
+            <PaymentElement
+              id="payment-element"
+              options={paymentElementOptions}
+            />
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="1">
+          <Accordion.Header>Shipping</Accordion.Header>
+          <Accordion.Body>
+            <AddressElement
+              onChange={(event) => {
+                if (event.complete) {
+                  // Extract potentially complete address
+                  const address = event.value.address;
+                  setAddress(address);
+                  console.log(address);
+                }
+              }}
+              options={{
+                mode: "shipping",
+                defaultValues: {
+                  name: "Jane Doe",
+                  allowedCountries: ["US"],
+                  blockPoBox: true,
+                  address: {
+                    line1: "354 Oyster Point Blvd",
+                    city: "South San Francisco",
+                    state: "CA",
+                    postal_code: "94080",
+                    country: "US",
+                  },
+                },
+              }}
+            />
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+      <button
+        className="mt-2"
+        disabled={isLoading || !stripe || !elements}
+        id="submit"
+      >
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>

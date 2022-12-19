@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { CookiesProvider } from "react-cookie";
 import { useCookies } from "react-cookie";
+import Confirmed from "./pages/Confirmed";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
@@ -48,7 +49,7 @@ function App() {
       setCookie("lightMode", "true");
       // console.log(`first condition`);
     }
-    if (temp == false) {
+    if (temp === false) {
       setCookie("lightMode", "false");
       // console.log(`second condition`);
     }
@@ -318,6 +319,7 @@ function App() {
             path="/register"
             element={<Register lightMode={isLightMode} />}
           />
+          <Route path="/confirmed" element={<Confirmed />} />
         </Route>
       </Routes>
     </CookiesProvider>
