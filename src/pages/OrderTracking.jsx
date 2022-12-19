@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Button, Container, Form, FormGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 export default function OrderTracking() {
+    const [flag,setFlag] = useState(false);
+    const [orderDetail,setOrderDetail] = useState();
     const [formData, setFormData] = useState({
         trackingId:""
       });
@@ -31,11 +33,21 @@ export default function OrderTracking() {
         axios(config)
         .then(function (response){
             console.log(JSON.stringify(response.data));
+            setFlag(true);
+            setOrderDetail(response.data);
         })
         .catch(function (error){
             console.log(error);
         })
       }
+
+    if (flag){
+        return (
+            <div className="container tracking__container">
+                <h1>{orderDetail.email}</h1>
+            </div>
+        )
+    }
     return (
       <div className="container tracking__container">
         <Form className="py-3" onSubmit={handleSubmit} noValidate>
@@ -58,6 +70,7 @@ export default function OrderTracking() {
             </Button>
           </Form>
       </div>
+     
     );
   }
   
