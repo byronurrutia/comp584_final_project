@@ -42,7 +42,6 @@ export default function OrderTracking() {
   if (flag) {
     return (
       <div className="container tracking__container">
-        <h1>{orderDetail.email}</h1>
         <Container
           className="d-md-flex"
           style={{
@@ -50,7 +49,15 @@ export default function OrderTracking() {
           }}
         >
           <div className="d-flex w-100 w-md-50 flex-column text-start p-md-5 p-3 my-3 me-md-4 ">
-            <h1>Total: ${orderDetail.total}</h1>
+            <h1>
+              {orderDetail.email} <br />
+              Total:{" $"}
+              {(orderDetail.total / Math.pow(10, 2)).toLocaleString("en-us", {
+                minimumFractionDigits: 2,
+              })}{" "}
+              <br />
+              Shipping to {orderDetail.address}
+            </h1>
             {orderDetail.products.map((item) => {
               return (
                 <div
