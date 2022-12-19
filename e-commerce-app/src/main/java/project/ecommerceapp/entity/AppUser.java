@@ -1,6 +1,5 @@
 package project.ecommerceapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +36,8 @@ public class AppUser implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appUser", orphanRemoval = true)
     private Set<CartItem> cart;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "appUser3")
+    private Set<OrderDetail> orderDetails;
 
 
     public void addToCart(CartItem item) {
@@ -55,6 +56,10 @@ public class AppUser implements UserDetails {
             item.setAppUser(null);
             cart.remove(item);
         }
+    }
+
+    public void addOrder(OrderDetail orderDetail){
+        orderDetails.add(orderDetail);
     }
 
     @Override

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.ecommerceapp.dao.AppUserRepository;
 import project.ecommerceapp.entity.AppUser;
+import project.ecommerceapp.entity.CartItem;
 import project.ecommerceapp.entity.ConfirmationToken;
 
 import java.time.LocalDateTime;
@@ -33,11 +34,41 @@ public class AppUserService implements UserDetailsService {
     }
 
     public String signUpUser(AppUser appUser){
+
+
         boolean userExists = appUserRepository.findByUsername(appUser.getUsername())
                 .isPresent();
 
         if (userExists){
             throw new IllegalStateException("username already exist");
+        }
+
+        AppUser appUser1 = appUserRepository.findAppUserByEmail(appUser.getEmail());
+        if(appUser1 != null){
+            String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
+            appUser1.setAppUserRole(appUser.getAppUserRole());
+            appUser1.setUsername(appUser.getUsername());
+            appUser1.setEnabled(appUser.getEnabled());
+            appUser1.setLastName(appUser.getLastName());
+            appUser1.setDisplayName(appUser.getDisplayName());
+            appUser1.setFirstName(appUser.getFirstName());
+            appUser1.setPassword(encodedPassword);
+
+            //logger.info(appUser.getUserprofile().getFirstName());
+
+            appUserRepository.save(appUser1);
+
+            String token = UUID.randomUUID().toString();
+            // creates a token and save with confirmationtokenservice
+            ConfirmationToken confirmationToken = new ConfirmationToken(
+                    token,
+                    LocalDateTime.now(),
+                    LocalDateTime.now().plusMinutes(15),
+                    appUser1
+            );
+
+            confirmationTokenService.saveConfirmationToken(confirmationToken);
+            return token;
         }
 
         String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());

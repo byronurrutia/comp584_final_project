@@ -60,7 +60,166 @@ public class RegistrationServiceImpl implements RegistrationService{
 
     private String buildEmail(String name, String link){
         return
-                "<p>Hi " + name + "</p>\n" +
-                        "<p>link: " + link +"</p>\n";
+
+                        "<body id=\"body\" style=\"margin: 0 !important; padding: 0 !important\">\n" +
+                        "\n" +
+                        "    <!-- Headline -->\n" +
+                        "\n" +
+                        "    <table\n" +
+                        "      width=\"100%\"\n" +
+                        "      border=\"0\"\n" +
+                        "      cellspacing=\"0\"\n" +
+                        "      role=\"presentation\"\n" +
+                        "      cellpadding=\"0\"\n" +
+                        "    >\n" +
+                        "\n" +
+                        "      <tr>\n" +
+                        "\n" +
+                        "        <!-- second layer of color background/ just testing layer here  -->\n" +
+                        " \n" +
+                        "        <td style=\"background: background: #ced3ed\">\n" +
+                        "\n" +
+                        "          <!-- the padding is the  table properties for the whole body to be inside it, for the body to be display at the center and have background color to style it\n" +
+                        "                   when the website is display -->\n" +
+                        "\n" +
+                        "          <table\n" +
+                        "            border=\"0\"\n" +
+                        "            cellspacing=\"0\"\n" +
+                        "            cellpadding=\"0\"\n" +
+                        "            role=\"presentation\"\n" +
+                        "            width=\"600px\"\n" +
+                        "            class=\"mobile\"\n" +
+                        "            style=\"\n" +
+                        "              width: 100%;\n" +
+                        "              min-width: 300px;\n" +
+                        "              max-width: 600px;\n" +
+                        "              margin: auto;\n" +
+                        "              background: white;\n" +
+                        "              font-family: Arial;\n" +
+                        "            \"\n" +
+                        "          >\n" +
+                        "\n" +
+                        "            <!-- Logo image-->\n" +
+                        "            <!-- creating a padding for background color behind the logo image , while setting up the resolution width/height and pixel count on the logo \n" +
+                        "              image by the use of style -->\n" +
+                        "\n" +
+                        "\n" +
+                        "            <tr>\n" +
+                        "\n" +
+                        "              <td style=\"background: c1cee3; margin: auto; padding-top: 10px\">\n" +
+                        "\n" +
+                        "                <img\n" +
+                        "                  src=\"https://cdn.glitch.global/cf88ab7b-bd30-468b-af5b-6a360ac654b1/logo.png?v=1671396741655\"\n" +
+                        "                  alt=\"logo image\"\n" +
+                        "                  width=\"100\"\n" +
+                        "                  height=\"auto\"\n" +
+                        "                  style=\"\n" +
+                        "                    min-width: 100px;\n" +
+                        "                    width: 100px;\n" +
+                        "                    max-width: 300px;\n" +
+                        "                    display: block;\n" +
+                        "                    margin: auto;\n" +
+                        "                  \"\n" +
+                        "                />\n" +
+                        "\n" +
+                        "              </td>\n" +
+                        "  \n" +
+                        "            </tr>\n" +
+                        "\n" +
+                        "            <tr>\n" +
+                        "\n" +
+                        "              <td align=\"center\">\n" +
+                        "    \n" +
+                        "                <!-- Headline -->\n" +
+                        "                <!-- setting up the Headline by the use of text formating that display at the center .For hero image using style to format the width/height and text is display in block , \n" +
+                        "                    inside the assign grid  -->\n" +
+                        "\n" +
+                        "                <h1 style=\"text-align: center\">Coding in Clothing</h1>\n" +
+                        "\n" +
+                        "              </td>\n" +
+                        "\n" +
+                        "            </tr>\n" +
+                        "\n" +
+                        "            <!-- putting the body in the table and style it it by the use of  padding for the body -->\n" +
+                        "\n" +
+                        "            <!-- Body copy -->\n" +
+                        "     \n" +
+                        "            <tr>\n" +
+                        "  \n" +
+                        "              <td style=\"padding: 0 20px\">\n" +
+                        "  \n" +
+                        "                <p>Hi there,"+ name +"</p>\n" +
+                        "\n" +
+                        "                <p>Welcome to Coding in Clothing</p>\n" +
+                        "\n" +
+                        "                <p>\n" +
+                        "                  happy to see you signing up!\n" +
+                        "                </p>\n" +
+                        "     \n" +
+                        "              </td>\n" +
+                        "       \n" +
+                        "            </tr>\n" +
+                        "   \n" +
+                        "            <tr>\n" +
+                        "        \n" +
+                        "              <td>\n" +
+                        "\n" +
+                        "                <!-- Button -->\n" +
+                        "\n" +
+                        "     \n" +
+                        "                <div style=\"margin: 30px; text-align: center\">\n" +
+                        "         \n" +
+                        "                  <a\n" +
+                        "                    class=\"button\"\n" +
+                        "                    href=\""+ link + "\"\n" +
+                        "                    style=\"\n" +
+                        "                      background-color: #c97f2a;\n" +
+                        "                      border-radius: 10px;\n" +
+                        "                      color: #ffffff;\n" +
+                        "                      display: inline-block;\n" +
+                        "                      font-weight: bold;\n" +
+                        "                      line-height: 50px;\n" +
+                        "                      text-align: center;\n" +
+                        "                      text-decoration: none;\n" +
+                        "                      width: 300px;\n" +
+                        "                      -webkit-text-size-adjust: none;\n" +
+                        "                    \"\n" +
+                        "                    >Comfirm Your Email</a\n" +
+                        "                  >\n" +
+                        "  \n" +
+                        "                </div>\n" +
+                        "        \n" +
+                        "              </td>\n" +
+                        "  \n" +
+                        "            </tr>\n" +
+                        "   \n" +
+                        "\n" +
+                        "            <!-- Footer information: Always include an unsubscribe link! -->\n" +
+                        "            <!--  the table properties where the unsubscribe link is inside  , using padding to style the the anchor tag for the hyperlink to be display in the website  -->\n" +
+                        "  \n" +
+                        "            <tr>\n" +
+                        "    \n" +
+                        "              <td style=\"padding-top: 100px\" align=\"center\">\n" +
+                        "        \n" +
+                        "                <!--<a href=\"#\">Unsubscribe</a> -->\n" +
+                        "         \n" +
+                        "                <small>\n" +
+                        "                  \n" +
+                        "                </small>\n" +
+                        " \n" +
+                        "              </td>\n" +
+                        "   \n" +
+                        "            </tr>\n" +
+                        "    \n" +
+                        "          </table>\n" +
+                        "      \n" +
+                        "        </td>\n" +
+                        "\n" +
+                        "      </tr>\n" +
+                        "\n" +
+                        "    </table>\n" +
+                        "\n" +
+                        "  </body>\n";
+
     }
 }

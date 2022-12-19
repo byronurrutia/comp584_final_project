@@ -2,34 +2,29 @@ package project.ecommerceapp.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import project.ecommerceapp.entity.AppUser;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Set;
 
-@Entity
 @Getter
 @Setter
-public class CartItem {
-
+@Entity
+public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private BigDecimal totalPrice;
 
-    private String imageUrl;
+    private String address;
 
+    private String orderId;
 
-    private BigDecimal unitPrice;
-
-
-    //private int quantity;
-
-
-    private String productId;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "orderDetail")
+    private Set<OrderItem> orderItems;
 
     @ManyToOne
     @JoinColumn(name = "appUser_id")
-    private AppUser appUser;
-
+    private AppUser appUser3;
 }

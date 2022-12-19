@@ -2,7 +2,6 @@ package project.ecommerceapp.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import project.ecommerceapp.entity.AppUser;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,7 +9,7 @@ import java.math.BigDecimal;
 @Entity
 @Getter
 @Setter
-public class CartItem {
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +28,7 @@ public class CartItem {
     private String productId;
 
     @ManyToOne
-    @JoinColumn(name = "appUser_id")
-    private AppUser appUser;
+    @JoinColumn(name = "order_id")
+    private OrderDetail orderDetail;
 
 }
