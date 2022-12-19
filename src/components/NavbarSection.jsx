@@ -80,6 +80,9 @@ export default function NavbarSection(props) {
               <Nav.Link onClick={() => handleNav("/login")}>Sign In</Nav.Link>
             )}
 
+            <Nav.Link onClick={() => handleNav("/tracking")}>
+              Track Order
+            </Nav.Link>
             <NavDropdown
               title="Product Catagories"
               id="collasible-nav-dropdown"

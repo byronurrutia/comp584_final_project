@@ -7,17 +7,18 @@ import {
 } from "@stripe/react-stripe-js";
 import { Accordion } from "react-bootstrap";
 import axios from "axios";
-import { redirect } from "react-router";
+import { useNavigate } from "react-router";
 
 export default function CheckoutForm(props) {
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [address, setAddress] = useState();
   const [email, setEmail] = useState("");
-  // const [orderTracking, setOrderTracking] = useState();
+  //const [orderTracking, setOrderTracking] = useState("");
 
   //idk when to call thsi function
   function placeOrder() {
@@ -53,9 +54,13 @@ export default function CheckoutForm(props) {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        //setOrderTracking(response.data);
         alert("your tracking id is " + response.data);
-        // setOrderTracking(response.data);
-        sessionStorage.setItem("orderTracking", response.data);
+        props.resetCart();
+        if (sessionStorage.getItem("userName") !== undefined) {
+          props.clearUserCart();
+          props.updateUserCart();
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -105,39 +110,36 @@ export default function CheckoutForm(props) {
 
     setIsLoading(true);
 
-    await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: `https://localhost:3000/`,
-      },
-      redirect: 'if_required',
-    })
-    .then(function (response) {
-      console.log(response);
-      
-      placeOrder();
-      
-      // setOrderTracking(response.data);
-      //sessionStorage.setItem("orderTracking", response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-      if (error.type === "card_error" || error.type === "validation_error") {
-        setMessage(error.message);
-      } else {
-        setMessage("An unexpected error occurred.");
-        window.alert(message);
-      }
-    });
- 
+    await stripe
+      .confirmPayment({
+        elements,
+        confirmParams: {
+          // Make sure to change this to your payment completion page
+          return_url: `https://localhost:3000/`,
+        },
+        redirect: "if_required",
+      })
+      .then(function (response) {
+        console.log(response);
+
+        placeOrder();
+        navigate("/tracking");
+      })
+      .catch(function (error) {
+        console.log(error);
+        if (error.type === "card_error" || error.type === "validation_error") {
+          setMessage(error.message);
+        } else {
+          setMessage("An unexpected error occurred.");
+          window.alert(message);
+        }
+      });
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
-    
 
     setIsLoading(false);
   };

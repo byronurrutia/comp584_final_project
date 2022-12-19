@@ -75,7 +75,12 @@ export default function Checkout(props) {
               stripe={props.stripePromise}
               key={props.clientSecret}
             >
-              <CheckoutForm cartItems={props.cartItems} />
+              <CheckoutForm
+                cartItems={props.cartItems}
+                resetCart={props.resetCart}
+                clearUserCart={props.clearUserCart}
+                updateUserCart={props.updateUserCart}
+              />
             </Elements>
           )}
         </div>

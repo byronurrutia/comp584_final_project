@@ -12,8 +12,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { CookiesProvider } from "react-cookie";
 import { useCookies } from "react-cookie";
-import Confirmed from "./pages/Confirmed";
-import OrderTracking from "./pages/OrderTracking"
+import OrderTracking from "./pages/OrderTracking";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
@@ -55,6 +54,11 @@ function App() {
       // console.log(`second condition`);
     }
     // console.log(`cookie: ${cookies.lightMode}`);
+  }
+
+  function resetCart() {
+    setCartItems([]);
+    setCookie("cartItems", []);
   }
 
   function clearUserCart() {
@@ -309,6 +313,9 @@ function App() {
                 clientSecret={clientSecret}
                 stripePromise={stripePromise}
                 cartItems={cartItems}
+                resetCart={resetCart}
+                clearUserCart={clearUserCart}
+                updateUserCart={updateUserCart}
               />
             }
           />
@@ -320,7 +327,7 @@ function App() {
             path="/register"
             element={<Register lightMode={isLightMode} />}
           />
-          <Route path="/confirmed" element={<Confirmed />} />
+          {/* <Route path="/confirmed/:orderTracking" element={<Confirmed />} /> */}
           <Route path="/tracking" element={<OrderTracking />} />
         </Route>
       </Routes>
