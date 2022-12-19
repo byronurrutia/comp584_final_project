@@ -138,6 +138,7 @@ export default function CheckoutForm(props) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter email address"
+        required
       />
       <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="0">
