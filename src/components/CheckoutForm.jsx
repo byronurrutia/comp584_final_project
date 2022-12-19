@@ -18,6 +18,7 @@ export default function CheckoutForm(props) {
   const [email, setEmail] = useState("");
   // const [orderTracking, setOrderTracking] = useState();
 
+  //idk when to call thsi function
   function placeOrder() {
     let temp = [];
     props.cartItems.forEach((element) => {
@@ -183,9 +184,9 @@ export default function CheckoutForm(props) {
         className="checkout-button mt-2"
         disabled={isLoading || !stripe || !elements}
         id="submit"
-        onClick={() => {
-          placeOrder();
-        }}
+        // onClick={() => {
+        //   placeOrder();
+        // }}
       >
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
