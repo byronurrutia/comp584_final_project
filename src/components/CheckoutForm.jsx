@@ -15,19 +15,21 @@ export default function CheckoutForm(props) {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [address, setAddress] = useState();
+  const [email, setEmail] = useState("");
+  // const [orderTracking, setOrderTracking] = useState();
 
   function placeOrder() {
     let temp = [];
     props.cartItems.forEach((element) => {
       let tempObj = {
-        imageUrl: element.img_url,
+        imageUrl: element.image_url[0],
         unitPrice: element.price,
         productId: element.id,
       };
       temp.push(tempObj);
     });
     var data = JSON.stringify({
-      email: sessionStorage.getItem("userName").replace(/['"]+/g, ""),
+      email: email,
       address: `${address.line1}, ${address.city}, ${address.state} ${address.postal_code}`,
       orderTotal: props.cartItems.reduce(
         (accumulator, currentValue) =>
@@ -36,7 +38,7 @@ export default function CheckoutForm(props) {
       ),
       itemList: temp,
     });
-    // console.log(`placed order: ${data}`);
+    console.log(`placed order: ${data}`);
     var config = {
       method: "post",
       url: "https://themillenniumfalcon.junhechen.com/584final/api/v1/order/placeOrder",
@@ -49,6 +51,7 @@ export default function CheckoutForm(props) {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        // setOrderTracking(response.data);
         sessionStorage.setItem("orderTracking", response.data);
       })
       .catch(function (error) {
@@ -103,7 +106,7 @@ export default function CheckoutForm(props) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/confirmed/",
+        return_url: `http://localhost:3000/confirmed/`,
       },
     });
 
@@ -119,8 +122,6 @@ export default function CheckoutForm(props) {
       window.alert(message);
     }
 
-    placeOrder();
-
     setIsLoading(false);
   };
 
@@ -130,6 +131,13 @@ export default function CheckoutForm(props) {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
+      <input
+        id="email"
+        type="text"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Enter email address"
+      />
       <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="0">
           <Accordion.Header>Payment</Accordion.Header>
@@ -172,9 +180,12 @@ export default function CheckoutForm(props) {
         </Accordion.Item>
       </Accordion>
       <button
-        className="mt-2"
+        className="checkout-button mt-2"
         disabled={isLoading || !stripe || !elements}
         id="submit"
+        onClick={() => {
+          placeOrder();
+        }}
       >
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
