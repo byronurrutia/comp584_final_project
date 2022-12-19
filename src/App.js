@@ -13,6 +13,7 @@ import Register from "./pages/Register";
 import { CookiesProvider } from "react-cookie";
 import { useCookies } from "react-cookie";
 import Confirmed from "./pages/Confirmed";
+import OrderTracking from "./pages/OrderTracking"
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
@@ -320,6 +321,7 @@ function App() {
             element={<Register lightMode={isLightMode} />}
           />
           <Route path="/confirmed" element={<Confirmed />} />
+          <Route path="/tracking" element={<OrderTracking />} />
         </Route>
       </Routes>
     </CookiesProvider>
