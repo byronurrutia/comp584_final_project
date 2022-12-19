@@ -45,6 +45,49 @@ export default function OrderTracking() {
         return (
             <div className="container tracking__container">
                 <h1>{orderDetail.email}</h1>
+        <Container
+        className="d-md-flex"
+        style={{
+          minHeight: "80vh",
+        }}
+      >
+        <div className="d-flex w-100 w-md-50 flex-column text-start p-md-5 p-3 my-3 me-md-4 ">
+          <h1>
+            Total: $
+            {orderDetail.total}
+          </h1>
+          {orderDetail.products.map((item) => {
+            return (
+              <div
+                className="d-flex align-items-center border rounded my-1"
+                style={{ minWidth: "250px" }}
+              >
+                {item.image_url.length !== 0 ? (
+                  <img
+                    className="m-2"
+                    src={item.image_url[0]}
+                    alt="product"
+                    style={{ width: 60, height: 60 }}
+                  />
+                ) : (
+                  <img
+                    src="https://www.nicepng.com/png/detail/207-2070432_white-background-url.png"
+                    alt="product"
+                    style={{ width: 30 }}
+                  />
+                )}
+                <p className="mt-2" style={{ fontSize: 12 }}>
+                  {item.productName} <br />${" "}
+                  {(item.price / Math.pow(10, 2)).toLocaleString("en-us", {
+                    minimumFractionDigits: 2,
+                  })}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+ 
+      </Container>
             </div>
         )
     }
