@@ -45,7 +45,7 @@ export default function NavbarSection(props) {
       className="shadow"
     >
       <Container fluid>
-        <Link to={"/comp584_final_project"}>
+        <Link to={"/"}>
           <Navbar.Brand>
             <svg
               width="30"
@@ -77,42 +77,31 @@ export default function NavbarSection(props) {
                 <Nav.Link onClick={() => logout()}>Sign Out</Nav.Link>
               </div>
             ) : (
-              <Nav.Link
-                onClick={() => handleNav("/comp584_final_project/login")}
-              >
-                Sign In
-              </Nav.Link>
+              <Nav.Link onClick={() => handleNav("/login")}>Sign In</Nav.Link>
             )}
 
+            <Nav.Link onClick={() => handleNav("/tracking")}>
+              Track Order
+            </Nav.Link>
             <NavDropdown
               title="Product Catagories"
               id="collasible-nav-dropdown"
               variant={props.lightMode ? "light" : "dark"}
             >
-              <NavDropdown.Item
-                onClick={() => handleNav("/comp584_final_project/outerwear")}
-              >
+              <NavDropdown.Item onClick={() => handleNav("/outerwear")}>
                 Outerwear
               </NavDropdown.Item>
-              <NavDropdown.Item
-                onClick={() => handleNav("/comp584_final_project/tops")}
-              >
+              <NavDropdown.Item onClick={() => handleNav("/tops")}>
                 Tops
               </NavDropdown.Item>
-              <NavDropdown.Item
-                onClick={() => handleNav("/comp584_final_project/bottoms")}
-              >
+              <NavDropdown.Item onClick={() => handleNav("/bottoms")}>
                 Bottoms
               </NavDropdown.Item>
-              <NavDropdown.Item
-                onClick={() => handleNav("/comp584_final_project/accessories")}
-              >
+              <NavDropdown.Item onClick={() => handleNav("/accessories")}>
                 Accessories
               </NavDropdown.Item>
 
-              <NavDropdown.Item
-                onClick={() => handleNav("/comp584_final_project/all")}
-              >
+              <NavDropdown.Item onClick={() => handleNav("/all")}>
                 All Products
               </NavDropdown.Item>
             </NavDropdown>
@@ -178,7 +167,7 @@ export default function NavbarSection(props) {
                   size="large"
                   className="w-75 mx-auto"
                   onClick={() => {
-                    handleClick("/comp584_final_project/checkout");
+                    handleClick("/checkout");
                   }}
                   disabled={props.cartItems.length === 0}
                 >

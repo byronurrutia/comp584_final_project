@@ -49,7 +49,7 @@ export default function Login(props) {
           JSON.stringify(response.data.userName)
         );
         props.toggleUser();
-        navigate("/comp584_final_project");
+        navigate("/");
       })
       .catch(function (error) {
         console.log(error);
@@ -68,7 +68,7 @@ export default function Login(props) {
       <Container
         className="d-flex align-items-center justify-content-center"
         style={{
-          height: "80vh",
+          minHeight: "80vh",
         }}
       >
         <div
@@ -109,9 +109,7 @@ export default function Login(props) {
               Submit
             </Button>
           </Form>
-          <Link to={"/comp584_final_project/register"}>
-            Need an account? Sign Up
-          </Link>
+          <Link to={"/register"}>Need an account? Sign Up</Link>
         </div>
       </Container>
     </Container>
