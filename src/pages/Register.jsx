@@ -4,6 +4,7 @@ import { Button, Container, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function Register(props) {
+  //this will hold data about the form
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -11,8 +12,10 @@ export default function Register(props) {
     password: "",
     confirmPassword: "",
   });
+  //check if it registration is valid and render html based on it
   const [isRegistered, setIsRegistered] = useState(false);
 
+  //handle change of the form and reset the state
   function handleChange(event) {
     setFormData((prev) => {
       return {
@@ -22,6 +25,7 @@ export default function Register(props) {
     });
   }
 
+  //do a api call when the form is submitted
   function handleSubmit(event) {
     event.preventDefault();
     console.log("Submitted!");
@@ -29,6 +33,7 @@ export default function Register(props) {
       .post(
         "https://themillenniumfalcon.junhechen.com/584final/api/v1/user/register",
         {
+          // form data will be sent as a request
           firstName: `${formData.firstName}`,
           lastName: `${formData.lastName}`,
           email: `${formData.email}`,
@@ -38,6 +43,7 @@ export default function Register(props) {
       )
       .then((res) => {
         console.log(res);
+        //the registiation was valid
         setIsRegistered(true);
       })
       .catch(function (error) {
@@ -79,6 +85,8 @@ export default function Register(props) {
         >
           <h1 className="w-100 text-center">Register</h1>
           {isRegistered === false ? (
+            // if the person has not registered
+            //render the form
             <Form onSubmit={handleSubmit}>
               <Form.Group
                 className="mb-3"
@@ -140,6 +148,8 @@ export default function Register(props) {
           ) : (
             <div className="text-center p-4">
               <h4>
+                {/* if the person has not registered, instruct user to confirm
+                account in a sent email */}
                 Please confirm your account through email and then{" "}
                 <Link to="/login">log in</Link>
               </h4>

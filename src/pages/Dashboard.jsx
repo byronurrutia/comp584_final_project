@@ -5,6 +5,7 @@ import FooterSection from "../components/FooterSection";
 export default function Dashboard(props) {
   return (
     <>
+      {/* pass data used in dashboard */}
       <NavbarSection
         key={props.cartItems}
         lightMode={props.lightMode}
@@ -17,6 +18,8 @@ export default function Dashboard(props) {
         clearUserCart={props.clearUserCart}
         updateUserCart={props.updateUserCart}
       />
+      {/* show the pages that are nested in this router element
+      between the nav and header */}
       <Outlet />
       <FooterSection lightMode={props.lightMode} />
     </>

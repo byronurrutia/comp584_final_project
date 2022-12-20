@@ -2,12 +2,16 @@ import axios from "axios";
 import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 export default function OrderTracking() {
+  //check if order tracking is valid
   const [flag, setFlag] = useState(false);
+  //data gathered from api
   const [orderDetail, setOrderDetail] = useState();
+  //user inputed form data
   const [formData, setFormData] = useState({
     trackingId: "",
   });
 
+  //dynamically set the form data state on user input
   function handleChange(event) {
     setFormData((prev) => {
       return {
@@ -17,6 +21,7 @@ export default function OrderTracking() {
     });
   }
 
+  //when form is submitted, a api is called
   function handleSubmit(event) {
     event.preventDefault();
     var data = formData.trackingId;
@@ -31,7 +36,9 @@ export default function OrderTracking() {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        //tracking code is valid
         setFlag(true);
+        //save the response data to state
         setOrderDetail(response.data);
       })
       .catch(function (error) {
@@ -39,6 +46,8 @@ export default function OrderTracking() {
       });
   }
 
+  //if code is invalid render the form
+  // if code is valid render the comfirmed checkout data
   if (flag) {
     return (
       <div className="container tracking__container">

@@ -4,12 +4,15 @@ import { Button, Container, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Login(props) {
+  //use the router navigator to redirect once the user logs in
   const navigate = useNavigate();
+  //store the form data in state
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
+  //this function checks input and changes the state based on inputed change
   function handleChange(event) {
     setFormData((prev) => {
       return {
@@ -19,8 +22,12 @@ export default function Login(props) {
     });
   }
 
+  //stops page reload
+  //makes an api call to authenticate the user
   function handleSubmit(event) {
     event.preventDefault();
+    //used to encript user data
+    //decripted in the server
     let text = `${formData.email}:${formData.password}`;
     let encoded = window.btoa(text);
 
@@ -36,6 +43,7 @@ export default function Login(props) {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        //store reponse data on session storage to be used in the application
         sessionStorage.setItem(
           "sessionId",
           JSON.stringify(response.data.sessionId)
@@ -48,11 +56,15 @@ export default function Login(props) {
           "userName",
           JSON.stringify(response.data.userName)
         );
+        //change the state acknowledging a user has logged in
         props.toggleUser();
+        //redirect to homepage
         navigate("/");
       })
       .catch(function (error) {
         console.log(error);
+        //the was an error loggin in
+        //wrong credenitals or server is down
         window.alert("Please check your form input or try again later");
       });
   }
@@ -60,6 +72,7 @@ export default function Login(props) {
   return (
     <Container
       fluid
+      //render based on web theme
       style={{
         backgroundColor: props.lightMode ? "white" : "#121212",
         color: props.lightMode ? "black" : "white",
@@ -76,6 +89,7 @@ export default function Login(props) {
           style={{ minWidth: 300 }}
         >
           <h1 className="w-100 text-center">Sign In</h1>
+          {/* for that dynamically change state on user input */}
           <Form className="py-3" onSubmit={handleSubmit} noValidate>
             <Form.Group
               required

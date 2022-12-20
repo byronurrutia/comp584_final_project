@@ -2,6 +2,8 @@ import { Container } from "react-bootstrap";
 import HeroSection from "../components/HeroSection";
 export default function Home(props) {
   return (
+    // this is the page that shows when the someone visits the page
+    // aka index page
     <Container
       fluid
       className="p-0"

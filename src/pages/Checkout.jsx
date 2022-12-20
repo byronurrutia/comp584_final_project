@@ -7,6 +7,7 @@ export default function Checkout(props) {
   return (
     <div
       className="w-100"
+      // load styles based on the theme
       style={{
         backgroundColor: props.lightMode ? "white" : "#121212",
         color: props.lightMode ? "black" : "white",
@@ -21,6 +22,8 @@ export default function Checkout(props) {
         <div className="d-flex w-100 w-md-50 flex-column text-start p-md-5 p-3 my-3 me-md-4 ">
           <h1>
             Total: $
+            {/* add all the prices to in the cart and format it
+            in USD */}
             {(
               props.cartItems.reduce(
                 (accumulator, currentValue) =>
@@ -31,6 +34,7 @@ export default function Checkout(props) {
               minimumFractionDigits: 2,
             })}
           </h1>
+          {/* display each cart item in a specific format */}
           {props.cartItems.map((item) => {
             return (
               <div
@@ -38,6 +42,7 @@ export default function Checkout(props) {
                 className="d-flex align-items-center border rounded my-1"
                 style={{ minWidth: "250px" }}
               >
+                {/* conditionally render the product image */}
                 {item.image_url.length !== 0 ? (
                   <img
                     className="m-2"
@@ -53,7 +58,7 @@ export default function Checkout(props) {
                   />
                 )}
                 <p className="mt-2" style={{ fontSize: 12 }}>
-                  {item.productName} <br />${" "}
+                  {item.productName} <br />$ {/* format the price in USD */}
                   {(item.price / Math.pow(10, 2)).toLocaleString("en-us", {
                     minimumFractionDigits: 2,
                   })}
@@ -69,12 +74,14 @@ export default function Checkout(props) {
             borderRadius: "15px",
           }}
         >
+          {/* check if there is required stripe data and render based on that */}
           {props.clientSecret && (
             <Elements
               options={props.options}
               stripe={props.stripePromise}
               key={props.clientSecret}
             >
+              {/* pass required data that will be used in the component */}
               <CheckoutForm
                 cartItems={props.cartItems}
                 resetCart={props.resetCart}

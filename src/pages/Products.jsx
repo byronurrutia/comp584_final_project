@@ -1,5 +1,6 @@
 import ProductSection from "../components/ProductSection";
 
+// this page is to wrap the mapped data of products
 export default function Products(props) {
   return (
     <div
@@ -13,7 +14,12 @@ export default function Products(props) {
       >
         {props.text}
       </h1>
-      <ProductSection addToCart={props.addToCart} lightMode={props.lightMode} products={props.products} />
+      {/* this will hold the formated list of products */}
+      <ProductSection
+        addToCart={props.addToCart}
+        lightMode={props.lightMode}
+        products={props.products}
+      />
     </div>
   );
 }
