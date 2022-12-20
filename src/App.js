@@ -14,32 +14,44 @@ import { CookiesProvider } from "react-cookie";
 import { useCookies } from "react-cookie";
 import OrderTracking from "./pages/OrderTracking";
 
+//load the stripe public key to use checkout assets
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
 function App() {
+  //use cookies to store web theme and cart items
   const [cookies, setCookie] = useCookies(["webData"]);
 
+  //website color theme
   const [isLightMode, setIsLightMode] = useState(true);
+  //stripe data products
   const [allProducts, setAllProducts] = useState([]);
+  //user/guest cart items saved to checkout
   const [cartItems, setCartItems] = useState([]);
+  //used to load stripe assets for payment info
   const [clientSecret, setClientSecret] = useState("");
+  //check if user logged in
   const [isUser, setIsUser] = useState(false);
 
+  //stripe assets appearences
   const appearance = {
     theme: isLightMode ? "flat" : "night",
     variables: {
       colorPrimary: isLightMode ? "007aff" : "#ffffff",
     },
   };
+
+  //used to configure stripe assets
   const options = {
     clientSecret,
     appearance,
   };
 
+  //change state of user boolean
   function toggleUser() {
     setIsUser((prev) => !prev);
   }
 
+  //change state of user/guest preffered theme
   function toggleMode() {
     setIsLightMode((prev) => !prev);
     let temp = isLightMode;
@@ -56,11 +68,13 @@ function App() {
     // console.log(`cookie: ${cookies.lightMode}`);
   }
 
+  //clear cart change state
   function resetCart() {
     setCartItems([]);
     setCookie("cartItems", []);
   }
 
+  //clear cart in the database using an api call
   function clearUserCart() {
     var data = JSON.stringify({
       username: sessionStorage.getItem("userName").replace(/['"]+/g, ""),
@@ -84,6 +98,8 @@ function App() {
       });
   }
 
+  //save the cart items of user when the user logs out
+  //using api call to our server
   function updateUserCart() {
     let temp = [];
     cartItems.forEach((item) => {
@@ -113,6 +129,8 @@ function App() {
       });
   }
 
+  //change the state of cart using previous data
+  //should be function within a function
   function addToCart(product) {
     let temp = [...cartItems];
     temp.push(product);
@@ -120,6 +138,7 @@ function App() {
     setCookie("cartItems", temp);
   }
 
+  //remove the first occurance of a product in the array using a flag boolean
   function removeItem(product) {
     let temp = [];
     let flag = true;
@@ -134,6 +153,8 @@ function App() {
     setCookie("cartItems", temp);
   }
 
+  //checkout and communicate with stripe api to complete payment
+  //get the required payment info handled by stripe
   function checkout() {
     // Create PaymentIntent as soon as the page loads
     fetch(
@@ -157,6 +178,8 @@ function App() {
     console.log("clientsecret: " + clientSecret);
   }
 
+  //a function to handle the category sections in our pages
+  //and what products show up in our pages
   function filter(category, products) {
     let outputArr = [];
     products.forEach((element) => {
@@ -167,6 +190,11 @@ function App() {
     return outputArr;
   }
 
+  //run this function whenever the page renders and the state of
+  //a user logining in/out
+  //loads itmes that are from the database
+  //sets the state of cart items
+  //does nothing if no user logged in and loads cookie cart item data
   useEffect(() => {
     function loadCart() {
       if (!isUser) {
@@ -198,6 +226,10 @@ function App() {
     loadCart();
   }, [isUser]);
 
+  //when ever the page renders from the begining
+  //load products saved from our stripe dashboard
+  //load the theme of the website saved from cookies
+  //handle user information saved in session id if the page is reloaded
   useEffect(() => {
     axios
       .get(
@@ -228,8 +260,10 @@ function App() {
   }, []);
 
   return (
+    // wrap the pages in react cookie so that data can be used in all of them
     <CookiesProvider>
       <Routes>
+        {/* have the first route be the dashboard so it surrounds the other pages */}
         <Route
           path="/"
           element={
@@ -247,7 +281,10 @@ function App() {
             />
           }
         >
+          {/* nest the other pages inside the dashboard layout */}
           <Route index element={<Home lightMode={isLightMode} />} />
+          {/* dynamically load the content in the different 
+          category pages */}
           <Route
             path="/outerwear"
             element={
